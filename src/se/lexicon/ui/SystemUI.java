@@ -7,18 +7,24 @@ public class SystemUI {
 	public void start() {
 		boolean isRunning = true;
 
+		SystemPrint.welcomeScreen();
+
 		try(Scanner scanner = new Scanner(System.in)) {
 			do {
 				try {
+					SystemPrint.printMenu();
+
 					System.out.println("User input : ");
 					String keyboard = scanner.next();
 
 					switch (keyboard) {
-						case "0":
+						case "1":
+							System.out.println("aaa");
+							break;
+						case "10":
 							System.out.println("Exiting program...");
 							isRunning = false;
 							break;
-
 						default:
 							System.out.println(keyboard + " is not a valid option. Please try again.");
 					}
