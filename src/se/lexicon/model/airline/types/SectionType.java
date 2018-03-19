@@ -1,6 +1,5 @@
-package se.lexicon.model.Food;
+package se.lexicon.model.airline.types;
 
 public enum SectionType {
-
     BUSINESS, ECONOMY
 }

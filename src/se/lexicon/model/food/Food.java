@@ -1,4 +1,4 @@
-package se.lexicon.model.Food;
+package se.lexicon.model.food;
 
 public abstract class Food {
 }
