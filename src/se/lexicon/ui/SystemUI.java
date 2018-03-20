@@ -27,6 +27,9 @@ public class SystemUI {
 						case "1":
 
 							break;
+						case "2":
+
+							break;
 						case "q":
 							SystemFunctionality.printQuit(user);
 							isRunning = false;
@@ -34,6 +37,7 @@ public class SystemUI {
 						case "su":
 							startSuperUser();
 							user = UserType.Customer;
+							SystemFunctionality.printLogin(user);
 							break;
 						default:
 							System.out.println(keyboard + " is not a valid option. Please try again.");
@@ -59,7 +63,7 @@ public class SystemUI {
 		user = UserType.SuperUser;
 		Scanner scanner = new Scanner(System.in);
 
-		SystemFunctionality.printLogin(UserType.Customer);
+		SystemFunctionality.printLogin(UserType.SuperUser);
 
 		do{
 			SystemFunctionality.superUser.printMenu();
@@ -72,7 +76,7 @@ public class SystemUI {
 				case "1":
 					break;
 				case "q":
-					SystemFunctionality.printQuit(UserType.Customer);
+					SystemFunctionality.printQuit(UserType.SuperUser);
 					isRunning = false;
 					break;
 				default:
