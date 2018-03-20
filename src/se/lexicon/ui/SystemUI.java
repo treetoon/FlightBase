@@ -2,6 +2,8 @@ package se.lexicon.ui;
 
 import se.lexicon.model.airline.AirlineManager;
 import se.lexicon.model.airline.Airplane;
+import se.lexicon.model.food.BusinessFood;
+import se.lexicon.model.food.types.BusinessFoodType;
 import se.lexicon.ui.login.types.UserType;
 
 import java.util.Scanner;
@@ -13,7 +15,7 @@ public class SystemUI {
 
     public SystemUI(){
         SystemFunctionality.setManager(manager);
-        manager.addPlane(new Airplane("flightnr1", 100));
+        manager.addPlane(new Airplane("flightnr1", 3));
         manager.addPlane(new Airplane("flightnr2", 200));
     }
 
