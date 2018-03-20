@@ -9,11 +9,7 @@ import se.lexicon.ui.SystemUI;
 public class Main {
 
     public static void main(String[] args) {
-        Airplane a=new Airplane("flightnret", 10);
-        //a.reserveSeat(SectionType.BUSINESS);
-
-        //SystemUI ui = new SystemUI();
-        //ui.start();
-
+        ui.start();
+        SystemUI ui = new SystemUI();
     }
 }
