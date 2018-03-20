@@ -14,15 +14,14 @@ public class Airplane {
     private Map<String, Boolean> businessSeatList;
     private Map<String, Boolean> economySeatList;
 
+    //6 platser per rad (A-F)
+    //A-C == BUSINESS
+    //D-F == ECONOMY
     public Airplane(String flightNr, int size) {
         this.flightNr=flightNr;
 
         businessSeatList=new TreeMap<>();
         economySeatList=new TreeMap<>();
-
-        //6 platser per rad (A-F)
-        //A-C == BUSINESS
-        //D-F == ECONOMY
 
         int numberOfRows=size/6;
         int remainingSeats=size%6;
@@ -70,7 +69,6 @@ public class Airplane {
 //            System.out.println("Key : " + entry.getKey() + " Value : " + entry.getValue());
 //        }
 
-
     }
 
     public String reserveSeat(SectionType type) {
@@ -103,7 +101,6 @@ public class Airplane {
         return null;
     }
 
-    //kan SectionType vara med som parameter?
     public void unreserveSeat(String seat) {
         Iterator<Map.Entry<String, Boolean>> entries = businessSeatList.entrySet().iterator();
         while (entries.hasNext()) {
