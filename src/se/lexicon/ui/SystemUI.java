@@ -1,5 +1,7 @@
 package se.lexicon.ui;
 
+import se.lexicon.model.airline.AirlineManager;
+import se.lexicon.model.airline.Airplane;
 import se.lexicon.ui.login.types.UserType;
 
 import java.util.Scanner;
@@ -7,6 +9,13 @@ import java.util.Scanner;
 public class SystemUI {
 
 	private UserType user = UserType.Customer; //default login
+    private static AirlineManager manager = new AirlineManager();
+
+    public SystemUI(){
+        SystemFunctionality.setManager(manager);
+        manager.addPlane(new Airplane("flightnr1", 100));
+        manager.addPlane(new Airplane("flightnr2", 200));
+    }
 
 	public void start() {
 		try(Scanner scanner = new Scanner(System.in)) {
@@ -25,7 +34,7 @@ public class SystemUI {
 
 					switch (keyboard) {
 						case "1":
-
+						    SystemFunctionality.user.createReservation(manager);
 							break;
 						case "2":
 
@@ -46,7 +55,8 @@ public class SystemUI {
 					// Catch any and all program-specific exceptions here to de-clutter your switch-case
 					// in case of checked and/or custom exceptions.
 				} catch (Exception e) {
-					System.out.println("Exception caught in inner try : " + e.getMessage());
+					e.printStackTrace();
+				    System.out.println("Exception caught in inner try : " + e.getMessage());
 					isRunning = false;
 				}
 			} while (isRunning);
