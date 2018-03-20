@@ -1,10 +1,15 @@
 package se.lexicon.ui.login;
 
-import se.lexicon.ui.login.types.UserType;
-
 public final class SuperUser {
     public void printMenu(){
-        //System.out.println("1. X");
+        System.out.println("1. Add Aeroplane");
+        System.out.println("2. Remove Aeroplane");
+        System.out.println("3. ");
+        System.out.println("4. X");
         System.out.println("Q. Quit SuperUser" + '\n');
+    }
+
+    public void Menu(){
+        
     }
 }
