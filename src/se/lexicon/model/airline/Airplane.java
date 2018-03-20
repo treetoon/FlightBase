@@ -2,10 +2,7 @@ package se.lexicon.model.airline;
 
 import se.lexicon.model.airline.types.SectionType;
 
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
 
 public class Airplane {
 
@@ -14,20 +11,25 @@ public class Airplane {
     private Map<String, Boolean> businessSeatList;
     private Map<String, Boolean> economySeatList;
 
+    public String getFlightNr() {
+        return flightNr;
+    }
+
     //6 platser per rad (A-F)
     //A-C == BUSINESS
     //D-F == ECONOMY
     public Airplane(String flightNr, int size) {
         this.flightNr=flightNr;
 
-        businessSeatList=new TreeMap<>();
-        economySeatList=new TreeMap<>();
+        //Använder LinkedHashMap för vill ha elementen i insertion order..
+        businessSeatList=new LinkedHashMap<>();
+        economySeatList=new LinkedHashMap<>();
 
         int numberOfRows=size/6;
         int remainingSeats=size%6;
 
-        System.out.println("rows: " + numberOfRows);
-        System.out.println("resten: " + remainingSeats);
+        //System.out.println("rows: " + numberOfRows);
+        //System.out.println("resten: " + remainingSeats);
 
         for (int i=1; i<=numberOfRows; i++) {
             businessSeatList.put(i+ "A", false);
@@ -69,6 +71,40 @@ public class Airplane {
 //            System.out.println("Key : " + entry.getKey() + " Value : " + entry.getValue());
 //        }
 
+    }
+
+    public int totalSeatsOfAirplane() {
+        return (this.businessSeatList.size() + this.economySeatList.size());
+    }
+
+    public int numberOfAvailableBusinessSeats() {
+        int availableSeats = 0;
+
+        Iterator<Map.Entry<String, Boolean>> entries = businessSeatList.entrySet().iterator();
+        while (entries.hasNext()) {
+            Map.Entry<String, Boolean> entry = entries.next();
+
+            if (entry.getValue() == false) {
+                availableSeats++;
+            }
+        }
+
+        return availableSeats;
+    }
+
+    public int numberOfAvailableEconomySeats() {
+        int availableSeats = 0;
+
+        Iterator<Map.Entry<String, Boolean>> entries = economySeatList.entrySet().iterator();
+        while (entries.hasNext()) {
+            Map.Entry<String, Boolean> entry = entries.next();
+
+            if (entry.getValue() == false) {
+                availableSeats++;
+            }
+        }
+
+        return availableSeats;
     }
 
     public String reserveSeat(SectionType type) {

@@ -9,7 +9,7 @@ import se.lexicon.ui.SystemUI;
 public class Main {
 
     public static void main(String[] args) {
-        ui.start();
         SystemUI ui = new SystemUI();
+        ui.start();
     }
 }

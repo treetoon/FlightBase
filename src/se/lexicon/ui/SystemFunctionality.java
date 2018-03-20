@@ -1,15 +1,22 @@
 package se.lexicon.ui;
 
+import se.lexicon.model.airline.AirlineManager;
 import se.lexicon.ui.login.SuperUser;
 import se.lexicon.ui.login.User;
 import se.lexicon.ui.login.types.UserType;
 
 public final class SystemFunctionality {
-
-    public static final User user = new User();
-    public static final SuperUser superUser = new SuperUser();
+    private static AirlineManager manager = null;
+    public static User user = null;
+    public static SuperUser superUser = null;
 
     private SystemFunctionality(){} //block instantiation
+
+    public static void setManager(AirlineManager mgr){
+        manager = mgr;
+        user = new User(manager);
+        superUser = new SuperUser(manager);
+    }
 
     public static void printWelcomeScreen(){
         System.out.println("-------------------------------------------");
