@@ -60,83 +60,71 @@ public class Airplane {
     }
 
     public int numberOfAvailableBusinessSeats() {
-        int availableSeats = 0;
-
-        Iterator<Map.Entry<String, Boolean>> entries = businessSeatList.entrySet().iterator();
-        while (entries.hasNext()) {
-            Map.Entry<String, Boolean> entry = entries.next();
-
-            if (entry.getValue() == false) {
-                availableSeats++;
-            }
-        }
-
-        return availableSeats;
+        return numberOfAvailableSeats(SectionType.BUSINESS);
     }
 
     public int numberOfAvailableEconomySeats() {
+        return numberOfAvailableSeats(SectionType.ECONOMY);
+    }
+
+    private int numberOfAvailableSeats(SectionType type){
+        Iterator<Map.Entry<String, Boolean>> entries = null;
         int availableSeats = 0;
 
-        Iterator<Map.Entry<String, Boolean>> entries = economySeatList.entrySet().iterator();
-        while (entries.hasNext()) {
-            Map.Entry<String, Boolean> entry = entries.next();
+        if(type == SectionType.BUSINESS)
+            entries = businessSeatList.entrySet().iterator();
+        else if(type == SectionType.ECONOMY)
+            entries = economySeatList.entrySet().iterator();
 
-            if (entry.getValue() == false) {
-                availableSeats++;
+        if(entries != null) {
+            while (entries.hasNext()) {
+                Map.Entry<String, Boolean> entry = entries.next();
+
+                if (!entry.getValue()) {
+                    availableSeats++;
+                }
             }
         }
-
         return availableSeats;
     }
 
     public String reserveSeat(SectionType type) {
+        Iterator<Map.Entry<String, Boolean>> entries = null;
 
         if (type == SectionType.BUSINESS) {
-            Iterator<Map.Entry<String, Boolean>> entries = businessSeatList.entrySet().iterator();
+            entries = businessSeatList.entrySet().iterator();
+        } else if (type == SectionType.ECONOMY) {
+            entries = economySeatList.entrySet().iterator();
+        }
+
+        if (entries != null){
             while (entries.hasNext()) {
                 Map.Entry<String, Boolean> entry = entries.next();
 
                 // if seat is empty (false), set to true
-                if (entry.getValue() == false) {
-                    entry.setValue(true);
-                    return entry.getKey();
-
-                }
-            }
-        } else if (type == SectionType.ECONOMY) {
-            Iterator<Map.Entry<String, Boolean>> entries = economySeatList.entrySet().iterator();
-            while (entries.hasNext()) {
-                Map.Entry<String, Boolean> entry = entries.next();
-
-                if (entry.getValue() == false) {
+                if (!entry.getValue()) {
                     entry.setValue(true);
                     return entry.getKey();
                 }
             }
         }
-
         return null;
     }
 
     public void unreserveSeat(String seat) {
         Iterator<Map.Entry<String, Boolean>> entries = businessSeatList.entrySet().iterator();
-        while (entries.hasNext()) {
-            Map.Entry<String, Boolean> entry = entries.next();
 
-            if (entry.getKey().equals(seat)) {
-                entry.setValue(false);
+        for (int i = 1; i <= 2; i++) { //loop twice for each list
+            while (entries.hasNext()) {
+                Map.Entry<String, Boolean> entry = entries.next();
+
+                if (entry.getKey().equals(seat)) {
+                    entry.setValue(false);
+                }
             }
+            if(i == 1)
+                entries = economySeatList.entrySet().iterator();
         }
-
-        entries = economySeatList.entrySet().iterator();
-        while (entries.hasNext()) {
-            Map.Entry<String, Boolean> entry = entries.next();
-
-            if (entry.getKey().equals(seat)) {
-                entry.setValue(false);
-            }
-        }
-
     }
 
     public void addSeat() {
