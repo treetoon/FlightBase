@@ -4,6 +4,7 @@ import se.lexicon.model.airline.*;
 import se.lexicon.model.airline.types.SectionType;
 import se.lexicon.model.food.Food;
 
+import java.sql.SQLOutput;
 import java.util.Scanner;
 
 public final class User {
@@ -23,17 +24,17 @@ public final class User {
     public void createReservation() {
         Scanner scanner = new Scanner(System.in);
 
-        System.out.print("Enter first name: ");
-        String firstName = scanner.next().toLowerCase();
-
-        System.out.print("Enter last name: ");
-        String lastName = scanner.next().toLowerCase();
-
-        System.out.print("Enter address: ");
-        String address = scanner.next().toLowerCase();
-
-        System.out.print("Enter telephone number: ");
-        String phoneNr = scanner.next().toLowerCase();
+//        System.out.print("Enter first name: ");
+//        String firstName = scanner.next().toLowerCase();
+//
+//        System.out.print("Enter last name: ");
+//        String lastName = scanner.next().toLowerCase();
+//
+//        System.out.print("Enter address: ");
+//        String address = scanner.next().toLowerCase();
+//
+//        System.out.print("Enter telephone number: ");
+//        String phoneNr = scanner.next().toLowerCase();
 
 
         String sectionType = chooseSectionType(scanner);
@@ -50,7 +51,7 @@ public final class User {
 
         System.out.print("Choose airplane: ");
         int airplaneIndex = scanner.nextInt();
-        String flightNr = manager.getPlane(airplaneIndex - 1).getFlightNr();
+        int flightNr = manager.getPlane(airplaneIndex - 1).getFlightNr();
         System.out.println("Flight " + flightNr + " chosen");
 
         String seatNr = "";
@@ -86,8 +87,6 @@ public final class User {
 
         } while (seatNr == null);
 
-        System.out.println("assigned seat nr: " + seatNr);
-
         Customer customer = new Customer("firstname", "lastName", "address", "phoneNr");
         //Customer customer=new Customer(firstName, lastName, address, phoneNr);
 
@@ -96,10 +95,10 @@ public final class User {
         int price = 20000;    //tillfälligt!
         Ticket ticket = new Ticket(seatNr, flightNr, price, Enum.valueOf(SectionType.class, sectionType));
 
-        Reservation reservation = new Reservation(customer);
+        Reservation reservation = new Reservation(customer, ticket);
 
         //ändra
-        System.out.println("Ticket + reservation created. Seat " + seatNr + " assigned");
+        System.out.println("Ticket with seat number " + seatNr + " created");
         System.out.println("---------------------------------------------------------------");
 
         createFoodReservation(scanner, reservation, Enum.valueOf(SectionType.class, sectionType), price);
@@ -109,56 +108,70 @@ public final class User {
         boolean continueLooping = true;
 
         do {
-        System.out.println("Available food items from menu:");
+            System.out.println("Available food items from menu:");
 
-        int foodNr=1;
+            int foodNr = 1;
 
-        if (sectionType == SectionType.BUSINESS) {
-            for (Food food : manager.getFoodManager().getBusinessFoodList()) {
-                System.out.println("Food name: " + food.getName() + ". " + " Price: " + food.getPrice());
-                foodNr++;
-            }
-        } else if (sectionType == SectionType.ECONOMY) {
-            for (Food food : manager.getFoodManager().getBusinessFoodList()) {
-                System.out.println(food.getName() + ". " + food.getPrice());
-                foodNr++;
-            }
-        }
-
-        System.out.println("Which food item would you like?");
-
-        int foodChoice = scanner.nextInt();
-
-        Food food=null;
-
-        if (sectionType == SectionType.BUSINESS) {
-            food=manager.getFoodManager().getBusinessFoodList().get(foodChoice-1);
-            reservation.getFoodList().add(food);
-        } else if (sectionType == SectionType.ECONOMY) {
-            food=manager.getFoodManager().getEconomyFoodList().get(foodChoice-1);
-            reservation.getFoodList().add(food);
-        }
-
-        System.out.println(food.getName() + " added!");
-
-        System.out.println("Would you like to add more food items (y/n) ");
-
-        String answer = scanner.next();
-
-        if (answer.toLowerCase().equals("y")) {
             if (sectionType == SectionType.BUSINESS) {
-                for (reservation.getFoodList()
+                for (Food food : manager.getFoodManager().getBusinessFoodList()) {
+                    System.out.println("(" + foodNr + ")" + "Food name: " + food.getName() + "\t" + " Price: " + food.getPrice());
+                    foodNr++;
+                }
             } else if (sectionType == SectionType.ECONOMY) {
-                food=manager.getFoodManager().getEconomyFoodList().get(foodChoice-1);
+                for (Food food : manager.getFoodManager().getEconomyFoodList()) {
+                    System.out.println("(" + foodNr + ")" + "Food name: " + food.getName() + "\t" + " Price: " + food.getPrice());
+                    foodNr++;
+                }
+            }
+
+            System.out.println("Which food item would you like?");
+
+            int foodChoice = scanner.nextInt();
+
+            Food food = null;
+
+            if (sectionType == SectionType.BUSINESS) {
+                food = manager.getFoodManager().getBusinessFoodList().get(foodChoice - 1);
+                reservation.getFoodList().add(food);
+            } else if (sectionType == SectionType.ECONOMY) {
+                food = manager.getFoodManager().getEconomyFoodList().get(foodChoice - 1);
                 reservation.getFoodList().add(food);
             }
 
-            continue;
-        }
-        else if (answer.toLowerCase().equals("n")) {
-            continueLooping=false;
-        }
+            System.out.println(food.getName() + " added!");
+
+            System.out.println("CURRENT FOOD ORDER: ");
+
+            int totalCost = 0;
+
+            for (Food foodItem : reservation.getFoodList()) {
+                System.out.println("Food name: " + foodItem.getName());
+                totalCost += foodItem.getPrice();
+            }
+
+            System.out.println("Total: " + totalCost);
+
+            System.out.println("------------------------------------------------------------");
+
+            System.out.println("Would you like to add more food items (y/n) ");
+
+            String answer = scanner.next();
+
+            if (answer.toLowerCase().equals("y")) {
+                continue;
+            } else if (answer.toLowerCase().equals("n")) {
+                continueLooping = false;
+                System.out.println("Finished adding food items");
+            }
         } while (continueLooping);
+
+        //VAD HÄNDER EFTER DETTA???
+
+    }
+
+    public void editReservation() {
+
+
 
     }
 

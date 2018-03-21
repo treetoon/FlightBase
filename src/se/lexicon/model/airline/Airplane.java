@@ -5,19 +5,21 @@ import se.lexicon.model.airline.types.SectionType;
 import java.util.*;
 
 public class Airplane {
-    private String flightNr;
+    private int flightNr;
+    private static int flightCounter = 0;
 
     private Map<String, Boolean> businessSeatList;
     private Map<String, Boolean> economySeatList;
 
-    public Airplane(String flightNr, int size) {
-        this.flightNr = flightNr;
+    public Airplane(int numOfSeats) {
+        flightCounter++;
+        flightNr=flightCounter;
 
         businessSeatList = new LinkedHashMap<>();
         economySeatList = new LinkedHashMap<>();
 
-        int numberOfRows = size / 6;
-        int remainingSeats = size % 6;
+        int numberOfRows = numOfSeats / 6;
+        int remainingSeats = numOfSeats % 6;
 
         for (int i = 1; i <= numberOfRows; i++) {
             businessSeatList.put(i + "A", false);
@@ -27,7 +29,6 @@ public class Airplane {
             economySeatList.put(i + "D", false);
             economySeatList.put(i + "E", false);
             economySeatList.put(i + "F", false);
-
         }
 
         //If there are remaining seats to be assigned (a last row)
@@ -38,20 +39,17 @@ public class Airplane {
             for (int i = 1; i <= remainingSeats; i++) {
                 if (seatLetter == 'A' || seatLetter == 'B' | seatLetter == 'C') {
                     String s = "" + lastRowNumber + seatLetter;
-                    //System.out.println("business " + s);
                     businessSeatList.put(s, false);
                 } else {
                     String s = "" + lastRowNumber + seatLetter;
-                    //System.out.println("economy" + s);
                     economySeatList.put(s, false);
                 }
                 seatLetter++;
             }
         }
-
     }
 
-    public String getFlightNr() {
+    public int getFlightNr() {
         return flightNr;
     }
 
@@ -70,7 +68,6 @@ public class Airplane {
                 availableSeats++;
             }
         }
-
         return availableSeats;
     }
 
@@ -84,6 +81,26 @@ public class Airplane {
             if (entry.getValue() == false) {
                 availableSeats++;
             }
+        }
+
+        return availableSeats;
+    }
+
+    public int numberOfAvailableSeats(SectionType sectionType) {
+        int availableSeats = 0;
+
+        if (sectionType==SectionType.BUSINESS) {
+
+            Iterator<Map.Entry<String, Boolean>> entries = economySeatList.entrySet().iterator();
+            while (entries.hasNext()) {
+                Map.Entry<String, Boolean> entry = entries.next();
+
+                if (entry.getValue() == false) {
+                    availableSeats++;
+                }
+            }
+        } else if (sectionType==SectionType.ECONOMY){
+
         }
 
         return availableSeats;

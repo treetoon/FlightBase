@@ -12,15 +12,17 @@ public class Reservation {
     private List<Food> foodList;
     private Customer customer;
     private int totalPrice;
+    private Ticket ticket;
 
     public List<Food> getFoodList() {
         return foodList;
     }
 
-    public Reservation(Customer customer) {
+    public Reservation(Customer customer, Ticket ticket) {
         numberOfReservations++;
         this.customer = customer;
         foodList = new ArrayList<>();
+        this.ticket=ticket;
     }
 
 

@@ -22,7 +22,7 @@ public class AirlineManager {
         reservationsList = new ArrayList<>();
 
         //default plane
-        addPlane(new Airplane("1", 10));
+        addPlane(new Airplane(10));
     }
 
     public void addPlane(Airplane plane) {
