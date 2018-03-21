@@ -18,4 +18,12 @@ public class FoodManager {
         businessFoodList.add(new Food(100, "entrecote"));
         businessFoodList.add(new Food(200, "grodlår"));
     }
+
+    public List<Food> getEconomyFoodList() {
+        return economyFoodList;
+    }
+
+    public List<Food> getBusinessFoodList() {
+        return businessFoodList;
+    }
 }

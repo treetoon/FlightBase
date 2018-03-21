@@ -4,6 +4,9 @@ public class Food {
     private String name;
     private int price;
 
+    public String getName() {
+        return name;
+    }
 
     public Food(int price, String name) {
         this.name=name;

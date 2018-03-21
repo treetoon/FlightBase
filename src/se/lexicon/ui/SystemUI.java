@@ -34,7 +34,7 @@ public class SystemUI {
 
 					switch (keyboard) {
 						case "1":
-						    SystemFunctionality.user.createReservation(manager);
+						    SystemFunctionality.user.createReservation();
 							break;
 						case "2":
 

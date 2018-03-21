@@ -2,6 +2,7 @@ package se.lexicon.ui.login;
 
 import se.lexicon.model.airline.*;
 import se.lexicon.model.airline.types.SectionType;
+import se.lexicon.model.food.Food;
 
 import java.util.Scanner;
 
@@ -19,7 +20,7 @@ public final class User {
         System.out.println("Q. Quit" + '\n');
     }
 
-    public void createReservation(AirlineManager manager) {
+    public void createReservation() {
         Scanner scanner = new Scanner(System.in);
 
 //        System.out.print("Enter first name: ");
@@ -88,12 +89,69 @@ public final class User {
         Customer customer = new Customer("firstname", "lastName", "address", "phoneNr");
         //Customer customer=new Customer(firstName, lastName, address, phoneNr);
 
-        //Ticket ticket=new Ticket();
 
-        //Reservation reservation = new Reservation(seatNr, flightNr, Enum.valueOf(SectionType.class, sectionType),
-               // null, customer);
+        //Hur sätts price??
+        int price = 20000;    //tillfälligt!
+        Ticket ticket = new Ticket(seatNr, flightNr, price, Enum.valueOf(SectionType.class, sectionType));
 
-        //createFoodReservation(scanner, reservation);
+        Reservation reservation = new Reservation(customer);
+
+        //ändra
+        System.out.println("Ticket + reservation created. Seat " + seatNr + " assigned");
+        System.out.println("---------------------------------------------------------------");
+
+        createFoodReservation(scanner, reservation, Enum.valueOf(SectionType.class, sectionType), price);
+    }
+
+    public void createFoodReservation(Scanner scanner, Reservation reservation, SectionType sectionType, int price) {
+        boolean continueLooping = true;
+
+        do {
+
+        System.out.println("Available food items from menu:");
+
+        int foodNr=1;
+
+        if (sectionType == SectionType.BUSINESS) {
+            for (Food food : manager.getFoodManager().getBusinessFoodList()) {
+                System.out.println("Food name: " + food.getName() + ". " + " Price: " + food.getPrice());
+                foodNr++;
+            }
+        } else if (sectionType == SectionType.ECONOMY) {
+            for (Food food : manager.getFoodManager().getBusinessFoodList()) {
+                System.out.println(food.getName() + ". " + food.getPrice());
+                foodNr++;
+            }
+        }
+
+        System.out.println("Which food item would you like?");
+
+        int foodChoice = scanner.nextInt();
+
+        Food food=null;
+
+        if (sectionType == SectionType.BUSINESS) {
+            food=manager.getFoodManager().getBusinessFoodList().get(foodChoice-1);
+            reservation.getFoodList().add(food);
+        } else if (sectionType == SectionType.ECONOMY) {
+            food=manager.getFoodManager().getEconomyFoodList().get(foodChoice-1);
+            reservation.getFoodList().add(food);
+        }
+
+        System.out.println(food.getName() + " added!");
+
+        System.out.println("Would you like to add more food items (y/n) ");
+
+        String answer = scanner.next();
+
+        if (answer.toLowerCase().equals("y")) {
+
+        }
+        else if (answer.toLowerCase().equals("n")) {
+            //avsluta på nåt sätt..
+        }
+        } while (continueLooping);
+
     }
 
     public String chooseSectionType(Scanner scanner) {
@@ -120,9 +178,5 @@ public final class User {
         } while (continueLooping);
 
         return sectionType;
-    }
-
-
-    public void createFoodReservation(Scanner scanner, Reservation reservation) {
     }
 }

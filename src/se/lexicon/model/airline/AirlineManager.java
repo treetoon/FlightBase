@@ -10,7 +10,11 @@ public class AirlineManager {
     private List<Reservation> reservationsList;
 
     private FoodManager foodManager;
-   // private Iterator<Airplane> it;
+
+    public FoodManager getFoodManager() {
+        return foodManager;
+    }
+    // private Iterator<Airplane> it;
 
     public AirlineManager() {
         airplaneList = new ArrayList<>();
