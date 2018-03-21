@@ -1,9 +1,7 @@
 package se.lexicon.model.food;
 
-import se.lexicon.model.food.types.EconomyFoodType;
-
 public class EconomyFood extends Food {
-    private EconomyFoodType name;
+    private String name;
 
     @Override
     public String toString() {
@@ -12,16 +10,16 @@ public class EconomyFood extends Food {
                 '}';
     }
 
-    public EconomyFood(EconomyFoodType name, int price) {
+    public EconomyFood(String name, int price) {
         super(price);
         this.name = name;
     }
 
-    public EconomyFoodType getName() {
+    public String getName() {
         return name;
     }
 
-    public void setName(EconomyFoodType name) {
+    public void setName(String name) {
         this.name = name;
     }
 }

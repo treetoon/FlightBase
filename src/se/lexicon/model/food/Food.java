@@ -3,6 +3,7 @@ package se.lexicon.model.food;
 public abstract class Food {
     private int price;
 
+
     public Food(int price) {
         this.price=price;
     }

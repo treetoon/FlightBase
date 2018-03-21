@@ -1,20 +1,18 @@
 package se.lexicon.model.food;
 
-import se.lexicon.model.food.types.BusinessFoodType;
-
 public class BusinessFood extends Food {
-    private BusinessFoodType name;
+    private String name;
 
-    public BusinessFood(BusinessFoodType name, int price) {
+    public BusinessFood(String name, int price) {
         super(price);
         this.name = name;
     }
 
-    public BusinessFoodType getName() {
+    public String getName() {
         return name;
     }
 
-    public void setName(BusinessFoodType name) {
+    public void setName(String name) {
         this.name = name;
     }
 }

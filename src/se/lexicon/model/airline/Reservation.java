@@ -21,7 +21,6 @@ public class Reservation {
         this.sectionType = sectionType;
         this.customer = customer;
         foodList = new ArrayList<>();
-
     }
 
     public String getReservationNumber() {
