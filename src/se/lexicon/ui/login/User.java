@@ -109,7 +109,6 @@ public final class User {
         boolean continueLooping = true;
 
         do {
-
         System.out.println("Available food items from menu:");
 
         int foodNr=1;
@@ -147,10 +146,17 @@ public final class User {
         String answer = scanner.next();
 
         if (answer.toLowerCase().equals("y")) {
+            if (sectionType == SectionType.BUSINESS) {
+                for (reservation.getFoodList()
+            } else if (sectionType == SectionType.ECONOMY) {
+                food=manager.getFoodManager().getEconomyFoodList().get(foodChoice-1);
+                reservation.getFoodList().add(food);
+            }
 
+            continue;
         }
         else if (answer.toLowerCase().equals("n")) {
-            //avsluta på nåt sätt..
+            continueLooping=false;
         }
         } while (continueLooping);
 
