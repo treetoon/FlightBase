@@ -1,17 +1,8 @@
 package se.lexicon.ui.login;
 
-import se.lexicon.model.airline.AirlineManager;
-import se.lexicon.model.airline.Airplane;
-import se.lexicon.model.airline.Customer;
-import se.lexicon.model.airline.Reservation;
+import se.lexicon.model.airline.*;
 import se.lexicon.model.airline.types.SectionType;
-import se.lexicon.model.food.BusinessFood;
-import se.lexicon.model.food.Food;
-import se.lexicon.model.food.types.BusinessFoodType;
-import se.lexicon.ui.login.types.UserType;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 public final class User {
@@ -97,10 +88,12 @@ public final class User {
         Customer customer = new Customer("firstname", "lastName", "address", "phoneNr");
         //Customer customer=new Customer(firstName, lastName, address, phoneNr);
 
-        Reservation reservation = new Reservation(seatNr, flightNr, Enum.valueOf(SectionType.class, sectionType),
-                null, customer);
+        //Ticket ticket=new Ticket();
 
-        createFoodReservation(scanner, reservation);
+        //Reservation reservation = new Reservation(seatNr, flightNr, Enum.valueOf(SectionType.class, sectionType),
+               // null, customer);
+
+        //createFoodReservation(scanner, reservation);
     }
 
     public String chooseSectionType(Scanner scanner) {

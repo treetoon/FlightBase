@@ -2,8 +2,6 @@ package se.lexicon.ui;
 
 import se.lexicon.model.airline.AirlineManager;
 import se.lexicon.model.airline.Airplane;
-import se.lexicon.model.food.BusinessFood;
-import se.lexicon.model.food.types.BusinessFoodType;
 import se.lexicon.ui.login.types.UserType;
 
 import java.util.Scanner;

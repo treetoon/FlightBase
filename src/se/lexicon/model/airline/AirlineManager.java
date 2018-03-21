@@ -1,24 +1,23 @@
 package se.lexicon.model.airline;
 
-import se.lexicon.model.food.BusinessFood;
-import se.lexicon.model.food.EconomyFood;
+import se.lexicon.model.food.FoodManager;
 
-import java.io.PrintStream;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 public class AirlineManager {
     private List<Airplane> airplaneList;
     private List<Reservation> reservationsList;
 
-    private List<BusinessFood> businessFoodList;
-    private List<EconomyFood> economyFoodList;
+    private FoodManager foodManager;
    // private Iterator<Airplane> it;
 
     public AirlineManager() {
         airplaneList = new ArrayList<>();
         //it = airplaneList.iterator();
+
+        foodManager=new FoodManager();
+
     }
 
     public void addPlane(Airplane plane) {
