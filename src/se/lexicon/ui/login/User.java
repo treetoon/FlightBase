@@ -4,12 +4,12 @@ import se.lexicon.model.airline.*;
 import se.lexicon.model.airline.types.SectionType;
 import se.lexicon.model.food.Food;
 
-import java.sql.SQLOutput;
 import java.util.Scanner;
 
 public final class User {
 
     private static AirlineManager manager = null;
+    private Scanner scanner = new Scanner(System.in);
 
     public User(AirlineManager mgr) {
         manager = mgr;
@@ -22,8 +22,6 @@ public final class User {
     }
 
     public void createReservation() {
-        Scanner scanner = new Scanner(System.in);
-
 //        System.out.print("Enter first name: ");
 //        String firstName = scanner.next().toLowerCase();
 //
@@ -87,24 +85,20 @@ public final class User {
 
         } while (seatNr == null);
 
-        Customer customer = new Customer("firstname", "lastName", "address", "phoneNr");
-        //Customer customer=new Customer(firstName, lastName, address, phoneNr);
-
-
         //Hur sätts price??
         int price = 20000;    //tillfälligt!
-        Ticket ticket = new Ticket(seatNr, flightNr, price, Enum.valueOf(SectionType.class, sectionType));
 
-        Reservation reservation = new Reservation(customer, ticket);
+        int reservationNr=manager.createReservation("firstname", "lastname", "address", "phonenr", seatNr, flightNr, price, Enum.valueOf(SectionType.class, sectionType));
+        //manager.createReservation(firstName, lastName, address, phonenr, seatNr, flightNr, price, Enum.valueOf(SectionType.class, sectionType));      //använd sen
 
         //ändra
         System.out.println("Ticket with seat number " + seatNr + " created");
         System.out.println("---------------------------------------------------------------");
 
-        createFoodReservation(scanner, reservation, Enum.valueOf(SectionType.class, sectionType), price);
+        createFoodReservation(reservationNr, Enum.valueOf(SectionType.class, sectionType), price);
     }
 
-    public void createFoodReservation(Scanner scanner, Reservation reservation, SectionType sectionType, int price) {
+    public void createFoodReservation(int reservationNr, SectionType sectionType, int price) {
         boolean continueLooping = true;
 
         do {
@@ -132,7 +126,7 @@ public final class User {
 
             if (sectionType == SectionType.BUSINESS) {
                 food = manager.getFoodManager().getBusinessFoodList().get(foodChoice - 1);
-                reservation.getFoodList().add(food);
+                manager.getReservationsList().get(reservationNr).add(food);
             } else if (sectionType == SectionType.ECONOMY) {
                 food = manager.getFoodManager().getEconomyFoodList().get(foodChoice - 1);
                 reservation.getFoodList().add(food);
@@ -164,8 +158,6 @@ public final class User {
                 System.out.println("Finished adding food items");
             }
         } while (continueLooping);
-
-        //VAD HÄNDER EFTER DETTA???
 
     }
 

@@ -1,5 +1,6 @@
 package se.lexicon.model.airline;
 
+import se.lexicon.model.airline.types.SectionType;
 import se.lexicon.model.food.FoodManager;
 
 import java.util.ArrayList;
@@ -37,6 +38,10 @@ public class AirlineManager {
         return airplaneList;
     }
 
+    public List<Reservation> getReservationsList() {
+        return reservationsList;
+    }
+
     public void list() {
 
     }
@@ -49,8 +54,14 @@ public class AirlineManager {
 
     }
 
-    public void createReservation() {
-        //create reservationNumber
+    public int createReservation(String firstName, String lastName, String address, String phoneNr, String seatNr, int flightNr, int price, SectionType sectionType) {
+        Customer customer=new Customer(firstName, lastName, address, phoneNr);
+        Ticket ticket = new Ticket(seatNr, flightNr, price, sectionType);
+
+        Reservation reservation = new Reservation(customer, ticket);
+        reservationsList.add(reservation);
+
+        return reservationsList.size();
     }
 
     public void editReservation() {

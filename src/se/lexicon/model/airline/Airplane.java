@@ -86,26 +86,6 @@ public class Airplane {
         return availableSeats;
     }
 
-    public int numberOfAvailableSeats(SectionType sectionType) {
-        int availableSeats = 0;
-
-        if (sectionType==SectionType.BUSINESS) {
-
-            Iterator<Map.Entry<String, Boolean>> entries = economySeatList.entrySet().iterator();
-            while (entries.hasNext()) {
-                Map.Entry<String, Boolean> entry = entries.next();
-
-                if (entry.getValue() == false) {
-                    availableSeats++;
-                }
-            }
-        } else if (sectionType==SectionType.ECONOMY){
-
-        }
-
-        return availableSeats;
-    }
-
     public String reserveSeat(SectionType type) {
         Iterator<Map.Entry<String, Boolean>> entries = null;
 
