@@ -13,7 +13,7 @@ public class Airplane {
 
     public Airplane(int numOfSeats) {
         flightCounter++;
-        flightNr=flightCounter;
+        flightNr = flightCounter;
 
         businessSeatList = new LinkedHashMap<>();
         economySeatList = new LinkedHashMap<>();
@@ -37,7 +37,7 @@ public class Airplane {
             int lastRowNumber = numberOfRows + 1;
 
             for (int i = 1; i <= remainingSeats; i++) {
-                if (seatLetter == 'A' || seatLetter == 'B' | seatLetter == 'C') {
+                if (seatLetter == 'A' || seatLetter == 'B' || seatLetter == 'C') {
                     String s = "" + lastRowNumber + seatLetter;
                     businessSeatList.put(s, false);
                 } else {

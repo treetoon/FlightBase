@@ -4,12 +4,21 @@ import se.lexicon.model.airline.*;
 import se.lexicon.model.airline.types.SectionType;
 import se.lexicon.model.food.Food;
 
+import java.util.List;
 import java.util.Scanner;
 
 public final class User {
-
     private static AirlineManager manager = null;
     private Scanner scanner = new Scanner(System.in);
+
+    private int reservationNr = 0;
+    private SectionType sectionType = null;
+    private String firstName = null, lastName = null,
+                    address = null, phoneNr = null;
+    private int airplaneIndex = 0;
+    private int flightNr = 0;
+    private String seatNr = null;
+    private int totalFoodCost = 0;
 
     public User(AirlineManager mgr) {
         manager = mgr;
@@ -22,56 +31,124 @@ public final class User {
     }
 
     public void createReservation() {
-//        System.out.print("Enter first name: ");
-//        String firstName = scanner.next().toLowerCase();
-//
-//        System.out.print("Enter last name: ");
-//        String lastName = scanner.next().toLowerCase();
-//
-//        System.out.print("Enter address: ");
-//        String address = scanner.next().toLowerCase();
-//
-//        System.out.print("Enter telephone number: ");
-//        String phoneNr = scanner.next().toLowerCase();
+        int price = 2000;
 
+        chooseSectionType();
+        createCustomer();
 
-        String sectionType = chooseSectionType(scanner);
+        printAllPlanesAndSeats();
 
-        int i = 1;
+        chooseAirplane();
+        chooseSeat();
+
+        reservationNr = manager.createReservation(firstName, lastName, address, phoneNr,
+                seatNr, flightNr, price, sectionType);
+
+        System.out.println("Ticket with seat number " + seatNr + " created");
+        System.out.println("-------------------------------------------");
+
+        createFoodReservation();
+    }
+
+    public void editReservation() {
+
+    }
+
+    /*
+    ---------------------------------------------
+    ---------------------------------------------
+    Private Methods
+    ---------------------------------------------
+    ---------------------------------------------
+     */
+
+    private void chooseSectionType() {
+        boolean continueLooping = true;
+
+        do {
+            System.out.print("Business(1) or Economy(2) Travel?: ");
+            int sectionTypeChoice = scanner.nextInt();
+            System.out.println();
+
+            switch (sectionTypeChoice) {
+                case 1:
+                    sectionType = SectionType.BUSINESS;
+                    continueLooping = false;
+                    break;
+                case 2:
+                    sectionType = SectionType.ECONOMY;
+                    continueLooping = false;
+                    break;
+                default:
+                    System.out.println("Wrong choice. Try again!");
+                    break;
+            }
+        } while (continueLooping);
+    }
+
+    private void createCustomer() {
+        System.out.print("Enter first name: ");
+        firstName = scanner.next().toLowerCase();
+
+        System.out.print("Enter last name: ");
+        lastName = scanner.next().toLowerCase();
+
+        System.out.print("Enter address: ");
+        address = scanner.next().toLowerCase();
+
+        System.out.print("Enter telephone number: ");
+        phoneNr = scanner.next().toLowerCase();
+    }
+
+    private void printAllPlanesAndSeats() {
         for (Airplane plane : manager.getPlanesList()) {
-            System.out.println("Flight (" + i + "): " + plane.getFlightNr());
-
-            System.out.println("Available seats: Business section: " + plane.numberOfAvailableBusinessSeats() +
-                    " Economy section: " + plane.numberOfAvailableEconomySeats());
-            System.out.println("----------------------------------------------------------------");
-            i++;
+            System.out.println('\n' + "---Flight " + plane.getFlightNr() + "---");
+            System.out.println("Available seats--> " + '\n' +
+                    "Business section: " + plane.numberOfAvailableBusinessSeats() + '\n' +
+                    "Economy section: " + plane.numberOfAvailableEconomySeats());
+            System.out.println("-------------------------------------------");
         }
+    }
 
-        System.out.print("Choose airplane: ");
-        int airplaneIndex = scanner.nextInt();
-        int flightNr = manager.getPlane(airplaneIndex - 1).getFlightNr();
-        System.out.println("Flight " + flightNr + " chosen");
+    private void chooseAirplane(){
+        boolean loop = true;
 
-        String seatNr = "";
+        do {
+            System.out.print("Choose airplane: ");
+            airplaneIndex = scanner.nextInt();
+
+            if (manager.getPlane(airplaneIndex - 1) != null) {
+                flightNr = manager.getPlane(airplaneIndex - 1).getFlightNr();
+
+                System.out.println("Flight " + flightNr + " chosen...");
+                loop = false;
+            }else{
+                System.out.println("Airplane doesn't exist, can you even read?");
+            }
+        }while (loop);
+    }
+
+    private void chooseSeat() {
+        int selection = 0;
 
         do {
             //index-1 för att användaren anger index som är 1 mer än i verkligheten..
-            seatNr = manager.getPlane(airplaneIndex - 1).reserveSeat(Enum.valueOf(SectionType.class, sectionType));
+            seatNr = manager.getPlane(airplaneIndex - 1).reserveSeat(sectionType);
 
             if (seatNr != null) {
                 break;
             }
 
             System.out.print("Failed to assign seat in chosen section. Choose another section (1) or cancel reservation (2)?");
-            int selection = scanner.nextInt();
+            selection = scanner.nextInt();
 
             boolean continueLoop = true;
 
             do {
                 switch (selection) {
                     case 1:
-                        sectionType = chooseSectionType(scanner);
-                        seatNr = manager.getPlane(airplaneIndex - 1).reserveSeat(Enum.valueOf(SectionType.class, sectionType));
+                        chooseSectionType();
+                        seatNr = manager.getPlane(airplaneIndex - 1).reserveSeat(sectionType);
                         continueLoop = false;
                         break;
                     case 2:
@@ -82,44 +159,18 @@ public final class User {
                         break;
                 }
             } while (continueLoop);
-
         } while (seatNr == null);
-
-        //Hur sätts price??
-        int price = 20000;    //tillfälligt!
-
-        int reservationNr=manager.createReservation("firstname", "lastname", "address", "phonenr", seatNr, flightNr, price, Enum.valueOf(SectionType.class, sectionType));
-        //manager.createReservation(firstName, lastName, address, phonenr, seatNr, flightNr, price, Enum.valueOf(SectionType.class, sectionType));      //använd sen
-
-        //ändra
-        System.out.println("Ticket with seat number " + seatNr + " created");
-        System.out.println("---------------------------------------------------------------");
-
-        createFoodReservation(reservationNr, Enum.valueOf(SectionType.class, sectionType), price);
     }
 
-    public void createFoodReservation(int reservationNr, SectionType sectionType, int price) {
+    private void createFoodReservation() {
         boolean continueLooping = true;
+        boolean ask = true;
+        totalFoodCost = 0;
 
         do {
-            System.out.println("Available food items from menu:");
-
-            int foodNr = 1;
-
-            if (sectionType == SectionType.BUSINESS) {
-                for (Food food : manager.getFoodManager().getBusinessFoodList()) {
-                    System.out.println("(" + foodNr + ")" + "Food name: " + food.getName() + "\t" + " Price: " + food.getPrice());
-                    foodNr++;
-                }
-            } else if (sectionType == SectionType.ECONOMY) {
-                for (Food food : manager.getFoodManager().getEconomyFoodList()) {
-                    System.out.println("(" + foodNr + ")" + "Food name: " + food.getName() + "\t" + " Price: " + food.getPrice());
-                    foodNr++;
-                }
-            }
+            printFood();
 
             System.out.println("Which food item would you like?");
-
             int foodChoice = scanner.nextInt();
 
             Food food = null;
@@ -132,64 +183,60 @@ public final class User {
                 reservation.getFoodList().add(food);
             }
 
-            System.out.println(food.getName() + " added!");
+            if (food != null)
+                System.out.println(food.getName() + " added!");
 
             System.out.println("CURRENT FOOD ORDER: ");
 
-            int totalCost = 0;
-
             for (Food foodItem : reservation.getFoodList()) {
                 System.out.println("Food name: " + foodItem.getName());
-                totalCost += foodItem.getPrice();
+                totalFoodCost += foodItem.getPrice();
             }
 
-            System.out.println("Total: " + totalCost);
+            System.out.println("Total: " + totalFoodCost);
+            System.out.println("-------------------------------------------");
+            System.out.println("Would you like to add more food items? (y/n) ");
 
-            System.out.println("------------------------------------------------------------");
+            do {
+                String answer = scanner.next();
 
-            System.out.println("Would you like to add more food items (y/n) ");
-
-            String answer = scanner.next();
-
-            if (answer.toLowerCase().equals("y")) {
-                continue;
-            } else if (answer.toLowerCase().equals("n")) {
-                continueLooping = false;
-                System.out.println("Finished adding food items");
-            }
+                switch (answer) {
+                    case "Y":
+                    case "y":
+                        ask = false;
+                        break;
+                    case "N":
+                    case "n":
+                        ask = false;
+                        continueLooping = false;
+                        System.out.println("Finished adding food items");
+                        break;
+                    default:
+                        System.out.println("Please write y or n...");
+                        break;
+                }
+            } while (ask);
         } while (continueLooping);
-
     }
 
-    public void editReservation() {
+    private void printFood(){
+        System.out.println("Available food items from menu:");
 
+        int foodNr = 1;
+        List<Food> foodList = null;
 
+        if (sectionType == SectionType.BUSINESS) {
+            foodList = manager.getFoodManager().getBusinessFoodList();
+        } else if (sectionType == SectionType.ECONOMY) {
+            foodList = manager.getFoodManager().getEconomyFoodList();
+        }else {
+            return;
+        }
 
-    }
-
-    public String chooseSectionType(Scanner scanner) {
-        String sectionType = "";
-        boolean continueLooping = true;
-
-        do {
-            System.out.print("Business(1) or Economy(2) Travel?: ");
-            int sectionTypeChoice = scanner.nextInt();
-
-            switch (sectionTypeChoice) {
-                case 1:
-                    sectionType = SectionType.BUSINESS.toString();
-                    continueLooping = false;
-                    break;
-                case 2:
-                    sectionType = SectionType.ECONOMY.toString();
-                    continueLooping = false;
-                    break;
-                default:
-                    System.out.println("Wrong choice. Try again!");
-                    break;
-            }
-        } while (continueLooping);
-
-        return sectionType;
+        for (Food food : foodList) {
+            System.out.println("(" + foodNr + ")" + "Food name: " +
+                    food.getName() + "\t" + " Price: " + food.getPrice());
+            foodNr++;
+        }
     }
 }

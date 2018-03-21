@@ -23,7 +23,7 @@ public class AirlineManager {
         reservationsList = new ArrayList<>();
 
         //default plane
-        addPlane(new Airplane(10));
+        addPlane(new Airplane(21));
     }
 
     public void addPlane(Airplane plane) {
@@ -31,7 +31,10 @@ public class AirlineManager {
     }
 
     public Airplane getPlane(int index) {
-        return airplaneList.get(index);
+        if (index < airplaneList.size())
+            return airplaneList.get(index);
+
+        return null;
     }
 
     public List<Airplane> getPlanesList() {
