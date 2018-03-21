@@ -1,18 +1,13 @@
 package se.lexicon.model.food;
 
+import se.lexicon.utilities.SectionType;
+
 public class BusinessFood extends Food {
-    private String name;
+	
+	public BusinessFood(int id, Double price, String name) {
+		super(id, price, name, SectionType.BUSINESS);
+	}
 
-    public BusinessFood(String name, int price) {
-        super(price);
-        this.name = name;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
+	
+   
 }

@@ -1,4 +1,4 @@
-package se.lexicon.model.airline.types;
+package se.lexicon.utilities;
 
 public enum SectionType {
     BUSINESS, ECONOMY

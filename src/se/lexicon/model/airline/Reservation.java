@@ -1,7 +1,7 @@
 package se.lexicon.model.airline;
 
-import se.lexicon.model.airline.types.SectionType;
 import se.lexicon.model.food.Food;
+import se.lexicon.utilities.SectionType;
 
 import java.util.ArrayList;
 import java.util.List;

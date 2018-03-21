@@ -1,25 +1,11 @@
 package se.lexicon.model.food;
 
+import se.lexicon.utilities.SectionType;
+
 public class EconomyFood extends Food {
-    private String name;
 
-    @Override
-    public String toString() {
-        return "EconomyFood{" +
-                "name=" + name + " price=" + super.getPrice() +
-                '}';
-    }
-
-    public EconomyFood(String name, int price) {
-        super(price);
-        this.name = name;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
+	public EconomyFood(int id, Double price, String name, SectionType sectionType) {
+		super(id, price, name, sectionType.ECONOMY);
+	}
+   
 }

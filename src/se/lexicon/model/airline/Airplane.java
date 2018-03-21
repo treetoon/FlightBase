@@ -1,8 +1,8 @@
 package se.lexicon.model.airline;
 
-import se.lexicon.model.airline.types.SectionType;
-
 import java.util.*;
+
+import se.lexicon.utilities.SectionType;
 
 public class Airplane {
     private String flightNr;

@@ -4,11 +4,10 @@ import se.lexicon.model.airline.AirlineManager;
 import se.lexicon.model.airline.Airplane;
 import se.lexicon.model.airline.Customer;
 import se.lexicon.model.airline.Reservation;
-import se.lexicon.model.airline.types.SectionType;
 import se.lexicon.model.food.BusinessFood;
 import se.lexicon.model.food.Food;
-import se.lexicon.model.food.types.BusinessFoodType;
 import se.lexicon.ui.login.types.UserType;
+import se.lexicon.utilities.SectionType;
 
 import java.util.ArrayList;
 import java.util.List;
