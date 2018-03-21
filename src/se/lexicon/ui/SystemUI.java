@@ -13,7 +13,7 @@ public class SystemUI {
 
     public SystemUI(){
         SystemFunctionality.setManager(manager);
-        manager.addPlane(new Airplane("flightnr1", 100));
+        manager.addPlane(new Airplane("flightnr1", 3));
         manager.addPlane(new Airplane("flightnr2", 200));
     }
 

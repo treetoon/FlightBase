@@ -5,40 +5,28 @@ import se.lexicon.model.airline.types.SectionType;
 import java.util.*;
 
 public class Airplane {
-
     private String flightNr;
 
     private Map<String, Boolean> businessSeatList;
     private Map<String, Boolean> economySeatList;
 
-    public String getFlightNr() {
-        return flightNr;
-    }
-
-    //6 platser per rad (A-F)
-    //A-C == BUSINESS
-    //D-F == ECONOMY
     public Airplane(String flightNr, int size) {
-        this.flightNr=flightNr;
+        this.flightNr = flightNr;
 
-        //Använder LinkedHashMap för vill ha elementen i insertion order..
-        businessSeatList=new LinkedHashMap<>();
-        economySeatList=new LinkedHashMap<>();
+        businessSeatList = new LinkedHashMap<>();
+        economySeatList = new LinkedHashMap<>();
 
-        int numberOfRows=size/6;
-        int remainingSeats=size%6;
+        int numberOfRows = size / 6;
+        int remainingSeats = size % 6;
 
-        //System.out.println("rows: " + numberOfRows);
-        //System.out.println("resten: " + remainingSeats);
+        for (int i = 1; i <= numberOfRows; i++) {
+            businessSeatList.put(i + "A", false);
+            businessSeatList.put(i + "B", false);
+            businessSeatList.put(i + "C", false);
 
-        for (int i=1; i<=numberOfRows; i++) {
-            businessSeatList.put(i+ "A", false);
-            businessSeatList.put(i+ "B", false);
-            businessSeatList.put(i+ "C", false);
-
-            economySeatList.put(i+ "D", false);
-            economySeatList.put(i+ "E", false);
-            economySeatList.put(i+ "F", false);
+            economySeatList.put(i + "D", false);
+            economySeatList.put(i + "E", false);
+            economySeatList.put(i + "F", false);
 
         }
 
@@ -61,16 +49,10 @@ public class Airplane {
             }
         }
 
-//        System.out.println("Businesslistan: ");
-//        for (Map.Entry<String, Boolean> entry : businessSeatList.entrySet()) {
-//            System.out.println("Key : " + entry.getKey() + " Value : " + entry.getValue());
-//        }
-//
-//        System.out.println("Economylistan: ");
-//        for (Map.Entry<String, Boolean> entry : economySeatList.entrySet()) {
-//            System.out.println("Key : " + entry.getKey() + " Value : " + entry.getValue());
-//        }
+    }
 
+    public String getFlightNr() {
+        return flightNr;
     }
 
     public int totalSeatsOfAirplane() {
@@ -109,25 +91,24 @@ public class Airplane {
 
     public String reserveSeat(SectionType type) {
 
-        if (type==SectionType.BUSINESS) {
+        if (type == SectionType.BUSINESS) {
             Iterator<Map.Entry<String, Boolean>> entries = businessSeatList.entrySet().iterator();
             while (entries.hasNext()) {
                 Map.Entry<String, Boolean> entry = entries.next();
 
                 // if seat is empty (false), set to true
-                if (entry.getValue()==false) {
+                if (entry.getValue() == false) {
                     entry.setValue(true);
                     return entry.getKey();
 
                 }
             }
-        }
-        else if (type==SectionType.ECONOMY) {
+        } else if (type == SectionType.ECONOMY) {
             Iterator<Map.Entry<String, Boolean>> entries = economySeatList.entrySet().iterator();
             while (entries.hasNext()) {
                 Map.Entry<String, Boolean> entry = entries.next();
 
-                if (entry.getValue()==false) {
+                if (entry.getValue() == false) {
                     entry.setValue(true);
                     return entry.getKey();
                 }
@@ -158,7 +139,10 @@ public class Airplane {
 
     }
 
-    public void addSeat() {}
-    public void removeSeat() {}
+    public void addSeat() {
+    }
+
+    public void removeSeat() {
+    }
 
 }
