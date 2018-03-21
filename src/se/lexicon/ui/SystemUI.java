@@ -1,7 +1,5 @@
 package se.lexicon.ui;
 
-import se.lexicon.model.airline.AirlineManager;
-import se.lexicon.model.airline.Airplane;
 import se.lexicon.ui.login.types.UserType;
 
 import java.util.Scanner;
@@ -9,12 +7,10 @@ import java.util.Scanner;
 public class SystemUI {
 
 	private UserType user = UserType.Customer; //default login
-    private static AirlineManager manager = new AirlineManager();
+    //private static AirlineManager manager = new AirlineManager();
 
     public SystemUI(){
-        SystemFunctionality.setManager(manager);
-        manager.addPlane(new Airplane("flightnr1", 3));
-        manager.addPlane(new Airplane("flightnr2", 200));
+        //SystemFunctionality.setManager(manager);
     }
 
 	public void start() {

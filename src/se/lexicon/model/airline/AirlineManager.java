@@ -18,10 +18,11 @@ public class AirlineManager {
 
     public AirlineManager() {
         airplaneList = new ArrayList<>();
-        //it = airplaneList.iterator();
+        foodManager = new FoodManager();
+        reservationsList = new ArrayList<>();
 
-        foodManager=new FoodManager();
-
+        //default plane
+        addPlane(new Airplane("1", 10));
     }
 
     public void addPlane(Airplane plane) {
@@ -29,36 +30,42 @@ public class AirlineManager {
     }
 
     public Airplane getPlane(int index) {
-       return airplaneList.get(index);
+        return airplaneList.get(index);
     }
 
     public List<Airplane> getPlanesList() {
         return airplaneList;
     }
-    public void list() {}
 
-    public void addSeat() {}
-    public void removeSeat() {}
+    public void list() {
+
+    }
+
+    public void addSeat() {
+
+    }
+
+    public void removeSeat() {
+
+    }
 
     public void createReservation() {
         //create reservationNumber
     }
-    public void editReservation() {}
 
-    public void profitCalc() {}
+    public void editReservation() {
 
-    private void reserveSeat() {}
+    }
+
+    public void profitCalc() {
+
+    }
+
+    private void reserveSeat() {
+
+    }
 
     public int numberOfAvailableBusinessSeats() {
-
         return 0;
     }
-//
-//    public Airplane next() {
-//        return it.next();
-//    }
-//
-//    public boolean hasNext() {
-//        return it.hasNext();
-//    }
 }
