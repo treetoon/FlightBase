@@ -5,6 +5,8 @@ import se.lexicon.model.airline.types.SectionType;
 public class Ticket {
     private String seatNumber;
     private String flightNumber;
+    private int price;
+    private SectionType sectionType;
 
     public Ticket(String seatNumber, String flightNumber, int price, SectionType sectionType) {
         this.seatNumber = seatNumber;
@@ -13,6 +15,5 @@ public class Ticket {
         this.sectionType = sectionType;
     }
 
-    private int price;
-    private SectionType sectionType;
+
 }
