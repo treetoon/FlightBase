@@ -19,21 +19,21 @@ public final class User {
         System.out.println("Q. Quit" + '\n');
     }
 
-    public void createReservation(AirlineManager manager) {
+    public void createReservation() {
         Scanner scanner = new Scanner(System.in);
 
-//        System.out.print("Enter first name: ");
-//        String firstName = scanner.next().toLowerCase();
-//
-//        System.out.print("Enter last name: ");
-//        String lastName = scanner.next().toLowerCase();
-//
-//        System.out.print("Enter address: ");
-//        String address = scanner.next().toLowerCase();
-//
-//        System.out.print("Enter telephone number: ");
-//        String phoneNr = scanner.next().toLowerCase();
-//
+        System.out.print("Enter first name: ");
+        String firstName = scanner.next().toLowerCase();
+
+        System.out.print("Enter last name: ");
+        String lastName = scanner.next().toLowerCase();
+
+        System.out.print("Enter address: ");
+        String address = scanner.next().toLowerCase();
+
+        System.out.print("Enter telephone number: ");
+        String phoneNr = scanner.next().toLowerCase();
+
 
         String sectionType = chooseSectionType(scanner);
 
