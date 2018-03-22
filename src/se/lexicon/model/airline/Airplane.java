@@ -62,21 +62,6 @@ public class Airplane {
                 seatLetter++;
             }
         }
-
-        System.out.println("-------------------------------");
-        System.out.println("Business:");
-        for ( String key : businessSeatList.keySet() ) {
-            System.out.println( key );
-        }
-        System.out.println("-------------------------------");
-
-        System.out.println("Economy");
-        for ( String key : economySeatList.keySet() ) {
-            System.out.println( key );
-        }
-        System.out.println("-------------------------------");
-
-
     }
 
     //Förutsätter att planen är i renoveringsläge och det ej finns bokningar..
