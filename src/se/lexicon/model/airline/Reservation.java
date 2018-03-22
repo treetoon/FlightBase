@@ -12,6 +12,7 @@ public class Reservation {
     private List<Food> foodList;
     private Customer customer;
     private int totalPrice;
+    private int totalFoodPrice;
     private Ticket ticket;
 
     public List<Food> getFoodList() {
@@ -32,23 +33,17 @@ public class Reservation {
 
     //calculates&sets total price (food+ticket)
     public int calculateTotalPrice() {
-        for (Food food : foodList) {
-            totalPrice+=food.getPrice();
-        }
-
-        totalPrice+=ticket.getPrice();
-
-        return totalPrice;
+        return totalPrice += ticket.getPrice() + calculateTotalFoodPrice();
+        totalPrice = 0; //reset
     }
 
     public int calculateTotalFoodPrice() {
-        int totalPrice=0;
+        totalFoodPrice = 0; //reset
 
         for (Food food : foodList) {
-            totalPrice+=food.getPrice();
+            totalFoodPrice += food.getPrice();
         }
-
-        return totalPrice;
+        return totalFoodPrice;
     }
 
     public void addFoodItem(Food food) {
