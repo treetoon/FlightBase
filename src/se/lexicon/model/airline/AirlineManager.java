@@ -13,6 +13,7 @@ public class AirlineManager {
     private List<Reservation> reservationsList;
 
     private FoodManager foodManager;
+    private final double companyProfitPercentage = .3; //implement big decimal later
 
     public AirlineManager() {
         airplaneList = new ArrayList<>();
@@ -71,7 +72,8 @@ public class AirlineManager {
 
     }
 
-    public int createReservation(String firstName, String lastName, String address, String phoneNr, String seatNr, int flightNr, SectionType sectionType) {
+    public int createReservation(String firstName, String lastName, String address, String phoneNr,
+                                 String seatNr, int flightNr, SectionType sectionType) {
         Customer customer=new Customer(firstName, lastName, address, phoneNr);
         Ticket ticket = new Ticket(seatNr, flightNr, getTicketPrice(flightNr, sectionType), sectionType);
 
@@ -85,10 +87,18 @@ public class AirlineManager {
 
     }
 
-    public int profitCalc() {
+    private int calculateProfit() {
         return reservationsList.stream().reduce(0,
                 (sum, reservation) -> sum += reservation.calculateTotalPrice(),
                 (sum1, sum2) -> sum1 + sum2);
+    }
+
+    public int getIncome(){
+        return calculateProfit();
+    }
+
+    public int getProfit(){
+        return (int)((double)calculateProfit() * companyProfitPercentage);
     }
 
     private void reserveSeat() {
