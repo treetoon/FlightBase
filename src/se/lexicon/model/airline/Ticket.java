@@ -15,6 +15,22 @@ public class Ticket {
         this.sectionType = sectionType;
     }
 
+    public String getSeatNumber() {
+        return seatNumber;
+    }
+
+    public int getFlightNumber() {
+        return flightNumber;
+    }
+
+    public int getPrice() {
+        return price;
+    }
+
+    public SectionType getSectionType() {
+        return sectionType;
+    }
+
     public void setPrice(int price) {
         this.price = price;
     }

@@ -23,18 +23,56 @@ public class Reservation {
         this.customer = customer;
         foodList = new ArrayList<>();
         this.ticket=ticket;
+        reservationNumber=numberOfReservations;
     }
 
+    public int getReservationNumber() {
+        return reservationNumber;
+    }
+
+    //calculates&sets total price (food+ticket)
     public int calculateTotalPrice() {
-        //set totalPriceof listfood & ticket
-        return 0;
+        int totalPrice=0;
+
+        for (Food food : foodList) {
+            totalPrice+=food.getPrice();
+        }
+
+        totalPrice+=ticket.getPrice();
+
+        return totalPrice;
+    }
+
+    public int calculateTotalFoodPrice() {
+        int totalPrice=0;
+
+        for (Food food : foodList) {
+            totalPrice+=food.getPrice();
+        }
+
+        return totalPrice;
     }
 
     public void addFoodItem(Food food) {
         foodList.add(food);
     }
 
+    public Customer getCustomer() {
+        return customer;
+    }
 
+    public Ticket getTicket() {
+        return ticket;
+    }
 
-
+    @Override
+    public String toString() {
+        return "Reservation{" +
+                "reservationNumber=" + reservationNumber +
+                ", foodList=" + foodList +
+                ", customer=" + customer +
+                ", totalPrice=" + totalPrice +
+                ", ticket=" + ticket +
+                '}';
+    }
 }

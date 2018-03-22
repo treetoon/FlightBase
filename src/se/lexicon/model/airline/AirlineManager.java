@@ -15,7 +15,6 @@ public class AirlineManager {
     public FoodManager getFoodManager() {
         return foodManager;
     }
-    // private Iterator<Airplane> it;
 
     public AirlineManager() {
         airplaneList = new ArrayList<>();
@@ -74,14 +73,10 @@ public class AirlineManager {
         Customer customer=new Customer(firstName, lastName, address, phoneNr);
         Ticket ticket = new Ticket(seatNr, flightNr, getTicketPrice(flightNr, sectionType), sectionType);
 
-        System.out.println(ticket.toString());
-
-
-
         Reservation reservation = new Reservation(customer, ticket);
         reservationsList.add(reservation);
 
-        return reservationsList.size();
+        return reservation.getReservationNumber();
     }
 
     public void editReservation() {

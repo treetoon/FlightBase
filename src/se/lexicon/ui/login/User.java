@@ -31,8 +31,6 @@ public final class User {
     }
 
     public void createReservation() {
-        //int price = 2000;
-
         chooseSectionType();
         createCustomer();
 
@@ -177,10 +175,10 @@ public final class User {
 
             if (sectionType == SectionType.BUSINESS) {
                 food = manager.getFoodManager().getBusinessFoodList().get(foodChoice - 1);
-                manager.getReservationsList().get(reservationNr - 1).addFoodItem(food);
+                manager.getReservationsList().get(reservationNr-1).addFoodItem(food);
             } else if (sectionType == SectionType.ECONOMY) {
                 food = manager.getFoodManager().getEconomyFoodList().get(foodChoice - 1);
-                manager.getReservationsList().get(reservationNr - 1).addFoodItem(food);
+                manager.getReservationsList().get(reservationNr-1).addFoodItem(food);
             }
 
             if (food != null)
@@ -210,6 +208,8 @@ public final class User {
                         ask = false;
                         continueLooping = false;
                         System.out.println("Finished adding food items");
+                        manager.getReservationsList().get(reservationNr-1).calculateTotalPrice();     //Sets total price
+                        printReceipt();
                         break;
                     default:
                         System.out.println("Please write y or n...");
@@ -217,6 +217,16 @@ public final class User {
                 }
             } while (ask);
         } while (continueLooping);
+    }
+
+    private void printReceipt() {
+        System.out.println("-------------------------------------");
+        System.out.println("Receipt for customer: " + manager.getReservationsList().get(reservationNr-1).getCustomer().getFirstName() +
+                " " + manager.getReservationsList().get(reservationNr-1).getCustomer().getLastName());
+        System.out.println("Ticket price:\t" + manager.getReservationsList().get(reservationNr-1).getTicket().getPrice());
+        System.out.println("Food price: \t" + manager.getReservationsList().get(reservationNr-1).calculateTotalFoodPrice());
+        System.out.println("Total price: \t" + manager.getReservationsList().get(reservationNr-1).calculateTotalPrice());
+        System.out.println("-------------------------------------");
     }
 
     private void printFood(){
