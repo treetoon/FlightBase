@@ -1,7 +1,6 @@
 package se.lexicon.ui.login;
 
 import se.lexicon.model.airline.AirlineManager;
-import se.lexicon.model.airline.Airplane;
 
 public final class SuperUser {
 
@@ -28,6 +27,8 @@ public final class SuperUser {
     }
 
     public void printAirlineProfit() {
-        System.out.println(manager.profitCalc());
+        System.out.println("---Airline Info---");
+        System.out.println("Income: " + manager.getIncome());
+        System.out.println("Profit: " + manager.getProfit() + '\n');
     }
 }
