@@ -15,5 +15,17 @@ public class Ticket {
         this.sectionType = sectionType;
     }
 
+    public void setPrice(int price) {
+        this.price = price;
+    }
 
+    @Override
+    public String toString() {
+        return "Ticket{" +
+                "seatNumber='" + seatNumber + '\'' +
+                ", flightNumber=" + flightNumber +
+                ", price=" + price +
+                ", sectionType=" + sectionType +
+                '}';
+    }
 }

@@ -11,12 +11,19 @@ public class Airplane {
     private Map<String, Boolean> businessSeatList;
     private Map<String, Boolean> economySeatList;
 
-    public Airplane(int numOfSeats) {
+    private int businessSectionPrice;
+    private int economySectionPrice;
+    private String destination;
+
+    public Airplane(int numOfSeats, int businessSectionPrice, int economySectionPrice, String destination) {
         flightCounter++;
         flightNr = flightCounter;
 
         businessSeatList = new LinkedHashMap<>();
         economySeatList = new LinkedHashMap<>();
+
+        this.businessSectionPrice=businessSectionPrice;
+        this.economySectionPrice=economySectionPrice;
 
         int numberOfRows = numOfSeats / 6;
         int remainingSeats = numOfSeats % 6;
@@ -51,6 +58,14 @@ public class Airplane {
 
     public int getFlightNr() {
         return flightNr;
+    }
+
+    public int getBusinessSectionPrice() {
+        return businessSectionPrice;
+    }
+
+    public int getEconomySectionPrice() {
+        return economySectionPrice;
     }
 
     public int totalSeatsOfAirplane() {

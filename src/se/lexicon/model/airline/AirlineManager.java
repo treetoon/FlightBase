@@ -23,7 +23,7 @@ public class AirlineManager {
         reservationsList = new ArrayList<>();
 
         //default plane
-        addPlane(new Airplane(21));
+        addPlane(new Airplane(10, 20000, 5000, "London"));
     }
 
     public void addPlane(Airplane plane) {
@@ -35,6 +35,19 @@ public class AirlineManager {
             return airplaneList.get(index);
 
         return null;
+    }
+
+    public int getTicketPrice(int flightNr, SectionType sectionType) {
+        for (Airplane airplane : airplaneList) {
+            if (airplane.getFlightNr()==flightNr) {
+                if (sectionType==SectionType.BUSINESS) {
+                    return airplane.getBusinessSectionPrice();
+                } else if (sectionType==SectionType.ECONOMY) {
+                    return airplane.getEconomySectionPrice();
+                }
+            }
+        }
+        return 0;
     }
 
     public List<Airplane> getPlanesList() {
@@ -57,9 +70,13 @@ public class AirlineManager {
 
     }
 
-    public int createReservation(String firstName, String lastName, String address, String phoneNr, String seatNr, int flightNr, int price, SectionType sectionType) {
+    public int createReservation(String firstName, String lastName, String address, String phoneNr, String seatNr, int flightNr, SectionType sectionType) {
         Customer customer=new Customer(firstName, lastName, address, phoneNr);
-        Ticket ticket = new Ticket(seatNr, flightNr, price, sectionType);
+        Ticket ticket = new Ticket(seatNr, flightNr, getTicketPrice(flightNr, sectionType), sectionType);
+
+        System.out.println(ticket.toString());
+
+
 
         Reservation reservation = new Reservation(customer, ticket);
         reservationsList.add(reservation);

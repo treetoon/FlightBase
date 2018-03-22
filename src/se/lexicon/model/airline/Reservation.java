@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Reservation {
-    private static int numberOfReservations=0;
+    private static int numberOfReservations = 0;
     private int reservationNumber;
     private List<Food> foodList;
     private Customer customer;
@@ -24,6 +24,16 @@ public class Reservation {
         foodList = new ArrayList<>();
         this.ticket=ticket;
     }
+
+    public int calculateTotalPrice() {
+        //set totalPriceof listfood & ticket
+        return 0;
+    }
+
+    public void addFoodItem(Food food) {
+        foodList.add(food);
+    }
+
 
 
 
