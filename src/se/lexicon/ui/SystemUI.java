@@ -81,6 +81,11 @@ public class SystemUI {
 			switch (keyboard) {
 				case "1":
 					break;
+				case "2":
+					break;
+				case "3":
+					SystemFunctionality.superUser.printAirlineProfit();
+					break;
 				case "q":
 					SystemFunctionality.printQuit(UserType.SuperUser);
 					isRunning = false;

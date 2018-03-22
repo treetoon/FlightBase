@@ -5,17 +5,14 @@ import se.lexicon.model.food.FoodManager;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class AirlineManager {
     private List<Airplane> airplaneList;
     private List<Reservation> reservationsList;
 
     private FoodManager foodManager;
-
-    public FoodManager getFoodManager() {
-        return foodManager;
-    }
-    // private Iterator<Airplane> it;
 
     public AirlineManager() {
         airplaneList = new ArrayList<>();
@@ -26,8 +23,8 @@ public class AirlineManager {
         addPlane(new Airplane(10, 20000, 5000, "London"));
     }
 
-    public void addPlane(Airplane plane) {
-        airplaneList.add(plane);
+    public FoodManager getFoodManager() {
+        return foodManager;
     }
 
     public Airplane getPlane(int index) {
@@ -56,6 +53,10 @@ public class AirlineManager {
 
     public List<Reservation> getReservationsList() {
         return reservationsList;
+    }
+
+    public void addPlane(Airplane plane) {
+        airplaneList.add(plane);
     }
 
     public void list() {
@@ -88,8 +89,12 @@ public class AirlineManager {
 
     }
 
-    public void profitCalc() {
+    public int profitCalc() {
+        Integer total = reservationsList.stream()
+                .reduce(0, (sum, reservation) -> sum += reservation.calculateTotalPrice(),
+                        (sum1, sum2) -> sum1+sum2);
 
+        return total;
     }
 
     private void reserveSeat() {
