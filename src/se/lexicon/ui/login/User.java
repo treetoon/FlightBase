@@ -139,7 +139,8 @@ public final class User {
                 break;
             }
 
-            System.out.print("Failed to assign seat in chosen section. Choose another section (1) or cancel reservation (2)?");
+            System.out.print("Failed to assign seat in chosen section. " +
+                    "Choose another section (1) or cancel reservation (2)?");
             selection = scanner.nextInt();
 
             boolean continueLoop = true;
