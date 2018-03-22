@@ -86,11 +86,9 @@ public class AirlineManager {
     }
 
     public int profitCalc() {
-        Integer total = reservationsList.stream()
-                .reduce(0, (sum, reservation) -> sum += reservation.calculateTotalPrice(),
-                        (sum1, sum2) -> sum1+sum2);
-
-        return total;
+        return reservationsList.stream().reduce(0,
+                (sum, reservation) -> sum += reservation.calculateTotalPrice(),
+                (sum1, sum2) -> sum1 + sum2);
     }
 
     private void reserveSeat() {
