@@ -33,7 +33,7 @@ public class SystemUI {
 						    SystemFunctionality.user.createReservation();
 							break;
 						case "2":
-
+                            SystemFunctionality.user.editReservation();
 							break;
 						case "q":
 							SystemFunctionality.printQuit(user);

@@ -50,23 +50,55 @@ public final class User {
 
     public void editReservation() {
         System.out.println("Which reservation would you like to edit (input reservation nr)? ");
-        int reservationNr=scanner.nextInt();
+        reservationNr=scanner.nextInt();
 
         if (manager.getReservationsList().get(reservationNr-1)!=null) {
             System.out.println("Edit current food order");
-            System.out.println("CURRENT FOOD ORDER: ");
 
-            int totalFoodCost=0;
 
-            for (Food foodItem : manager.getReservationsList().get(reservationNr-1).getFoodList()) {
-                System.out.println("Food name: " + foodItem.getName());
-                totalFoodCost += foodItem.getPrice();
-            }
+            boolean continueLoop=false;
 
-            System.out.println("Total: " + totalFoodCost);
-            System.out.println("-------------------------------------------");
-            System.out.println("Would you like to add more food items? (y/n) ");
+            do {
+                System.out.println("Would you like to add (1) or remove (2) food items?");
+                int selection = scanner.nextInt();
+
+                if (selection == 1) {
+                    addFood();
+                } else if (selection == 2) {
+                    removeFood();
+                } else {
+                    System.out.println("Wrong choice. Try again!");
+                    continueLoop=true;
+                }
+            } while(continueLoop);
+
         }
+
+    }
+
+    private void printFoodOrder() {
+        System.out.println("CURRENT FOOD ORDER: ");
+
+        int totalFoodCost=0;
+        int i=1;
+
+        for (Food foodItem : manager.getReservationsList().get(reservationNr-1).getFoodList()) {
+            System.out.println("(" + i + ")" + " Food name: " + foodItem.getName());
+            totalFoodCost += foodItem.getPrice();
+            i++;
+        }
+
+        System.out.println("Total: " + totalFoodCost);
+        System.out.println("-------------------------------------------");
+    }
+
+    private void addFood() {
+        printFoodOrder();
+
+        createFoodReservation();
+    }
+
+    private void removeFood() {
 
     }
 
