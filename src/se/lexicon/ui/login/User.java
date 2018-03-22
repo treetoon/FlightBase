@@ -14,7 +14,7 @@ public final class User {
     private int reservationNr = 0;
     private SectionType sectionType = null;
     private String firstName = null, lastName = null,
-                    address = null, phoneNr = null;
+            address = null, phoneNr = null;
     private int airplaneIndex = 0;
     private int flightNr = 0;
     private String seatNr = null;
@@ -45,115 +45,10 @@ public final class User {
         System.out.println("Ticket with seat number " + seatNr + " created");
         System.out.println("-------------------------------------------");
 
-        createFoodReservation(true);
+        createFoodReservation();
     }
 
-    public void editReservation() {
-        System.out.println("Which reservation would you like to edit (input reservation nr)? ");
-        reservationNr=scanner.nextInt();
-
-        if (manager.getReservationsList().get(reservationNr-1)!=null) {
-            sectionType=manager.getReservationsList().get(reservationNr-1).getTicket().getSectionType();
-
-            System.out.println("Edit current food order");
-
-            boolean continueLoop=false;
-
-            do {
-                System.out.println("Would you like to add (1) or remove (2) food items?");
-                int selection = scanner.nextInt();
-
-                if (selection == 1) {
-                    addFood();
-                } else if (selection == 2) {
-                    removeFood();
-                } else {
-                    System.out.println("Wrong choice. Try again!");
-                    continueLoop=true;
-                }
-            } while(continueLoop);
-        }
-    }
-
-    //används bara vid editReservation.. KOLLA OM DETTA STÄMMER
-    private void printFoodOrder() {
-        System.out.println("CURRENT FOOD ORDER: ");
-
-        int totalFoodCost = 0;
-
-        int i = 1;
-
-        for (Food foodItem : manager.getReservationsList().get(reservationNr - 1).getFoodList()) {
-            System.out.println(i + ". Food name: " + foodItem.getName());
-            totalFoodCost += foodItem.getPrice();
-            i++;
-        }
-
-        System.out.println("Total: " + totalFoodCost);
-        System.out.println("-------------------------------------------");
-    }
-
-    private void addFood() {
-        printFoodOrder();
-
-        createFoodReservation(true);
-    }
-
-    //EDITERA DENNA METOD!!
-    private void removeFood() {
-        printFoodOrder();
-
-        boolean continueLooping = true;
-        boolean ask = true;
-
-        do {
-            totalFoodCost = 0;
-
-            System.out.println("Which food item would you like to remove?");
-            int foodChoice = scanner.nextInt();
-
-            manager.getReservationsList().get(reservationNr-1).removeFoodItem(foodChoice-1);
-
-
-//            System.out.println("CURRENT FOOD ORDER: ");
-//
-//            for (Food foodItem : manager.getReservationsList().get(reservationNr-1).getFoodList()) {
-//                System.out.println("Food name: " + foodItem.getName());
-//                totalFoodCost += foodItem.getPrice();
-//            }
-//
-//            System.out.println("Total: " + totalFoodCost);
-//            System.out.println("-------------------------------------------");
-//            System.out.println("Would you like to add more food items? (y/n) ");
-//
-//            do {
-//                String answer = scanner.next();
-//
-//                switch (answer) {
-//                    case "Y":
-//                    case "y":
-//                        ask = false;
-//                        break;
-//                    case "N":
-//                    case "n":
-//                        ask = false;
-//                        continueLooping = false;
-//                        System.out.println("Finished adding food items");
-//                        manager.getReservationsList().get(reservationNr-1).calculateTotalPrice();     //Sets total price
-//
-//                        if (printsReceipt) {
-//                            printReceipt();
-//                        }
-//                        break;
-//                    default:
-//                        System.out.println("Please write y or n...");
-//                        break;
-//                }
-//            } while (ask);
-        } while (continueLooping);
-    }
-
-    private void createFoodReservation(boolean printsReceipt) {
+    private void createFoodReservation() {
         boolean continueLooping = true;
         boolean ask = true;
 
@@ -167,19 +62,34 @@ public final class User {
             Food food = null;
 
             if (sectionType == SectionType.BUSINESS) {
-                food = manager.getFoodManager().getBusinessFoodList().get(foodChoice - 1);
-                manager.getReservationsList().get(reservationNr-1).addFoodItem(food);
+                int size = manager.getFoodManager().getBusinessFoodList().size();
+
+                if (foodChoice <= size) {
+                    food = manager.getFoodManager().getBusinessFoodList().get(foodChoice - 1);
+                    manager.getReservationsList().get(reservationNr - 1).addFoodItem(food);
+                } else {
+                    System.out.println("Wrong input. Try again!");
+                    continue;
+                }
             } else if (sectionType == SectionType.ECONOMY) {
-                food = manager.getFoodManager().getEconomyFoodList().get(foodChoice - 1);
-                manager.getReservationsList().get(reservationNr-1).addFoodItem(food);
+                int size = manager.getFoodManager().getEconomyFoodList().size();
+
+                if (foodChoice <= size) {
+                    food = manager.getFoodManager().getEconomyFoodList().get(foodChoice - 1);
+                    manager.getReservationsList().get(reservationNr - 1).addFoodItem(food);
+                } else {
+                    System.out.println("Wrong input. Try again!");
+                    continue;
+                }
             }
 
             if (food != null)
                 System.out.println(food.getName() + " added!");
 
-            System.out.println("CURRENT FOOD ORDER: ");
+            System.out.println("-------------------------------------------");
+            System.out.println("Current Food Order: ");
 
-            for (Food foodItem : manager.getReservationsList().get(reservationNr-1).getFoodList()) {
+            for (Food foodItem : manager.getReservationsList().get(reservationNr - 1).getFoodList()) {
                 System.out.println("Food name: " + foodItem.getName());
                 totalFoodCost += foodItem.getPrice();
             }
@@ -201,11 +111,8 @@ public final class User {
                         ask = false;
                         continueLooping = false;
                         System.out.println("Finished adding food items");
-                        manager.getReservationsList().get(reservationNr-1).calculateTotalPrice();     //Sets total price
-
-                        if (printsReceipt) {
-                            printReceipt();
-                        }
+                        manager.getReservationsList().get(reservationNr - 1).calculateTotalPrice();     //Sets total price
+                        printReceipt();
                         break;
                     default:
                         System.out.println("Please write y or n...");
@@ -215,13 +122,121 @@ public final class User {
         } while (continueLooping);
     }
 
-    /*
-    ---------------------------------------------
-    ---------------------------------------------
-    Private Methods
-    ---------------------------------------------
-    ---------------------------------------------
-     */
+    public void editReservation() {
+        System.out.println("Which reservation would you like to edit? Input reservation number");
+        reservationNr = scanner.nextInt();
+
+        //Checks if reservation number is valid
+        if (reservationNr > manager.getReservationsList().size()) {
+            System.out.println("Invalid reservation number. Try again!");
+            editReservation();
+        }
+
+        if (manager.getReservationsList().get(reservationNr - 1) != null) {
+            sectionType = manager.getReservationsList().get(reservationNr - 1).getTicket().getSectionType();
+
+            System.out.println("Editing current food order...");
+
+            boolean ask = false;
+
+            do {
+                System.out.println("Would you like to add (1) or remove (2) food items?");
+                int selection = scanner.nextInt();
+
+                if (selection == 1) {
+                    addFood();
+                } else if (selection == 2) {
+                    removeFood();
+                } else {
+                    System.out.println("Wrong choice. Try again!");
+                    ask = true;
+                }
+            } while (ask);
+
+        } else {
+            System.out.println("No reservation found. Try again!");
+            editReservation();
+        }
+    }
+
+    private void addFood() {
+        printFoodOrder();
+
+        createFoodReservation();
+    }
+
+    private void removeFood() {
+        printFoodOrder();
+
+        boolean continueLooping = true;
+        boolean ask = true;
+
+        do {
+            totalFoodCost = 0;
+
+            System.out.println("Which food item would you like to remove?");
+            int foodChoice = scanner.nextInt();
+
+            String foodName = manager.getReservationsList().get(reservationNr - 1).removeFoodItem(foodChoice - 1);
+
+            if (foodName != null) {
+                System.out.println(foodName + " removed");
+
+                manager.getReservationsList().get(reservationNr - 1).calculateTotalPrice();     //Sets total price
+
+                //If the food list in the reservation is empty - return
+                if (manager.getReservationsList().get(reservationNr - 1).getFoodList().size() == 0) {
+                    System.out.println("All food items removed!");
+                    return;
+                }
+
+                printFoodOrder();
+
+                System.out.println("Would you like to remove more food items? (y/n) ");
+
+                do {
+                    String answer = scanner.next();
+
+                    switch (answer) {
+                        case "Y":
+                        case "y":
+                            ask = false;
+                            break;
+                        case "N":
+                        case "n":
+                            ask = false;
+                            continueLooping = false;
+                            System.out.println("Finished removing food items");
+                            manager.getReservationsList().get(reservationNr - 1).calculateTotalPrice();     //Sets total price
+                            printReceipt();
+                            break;
+                        default:
+                            System.out.println("Please write y or n...");
+                            break;
+                    }
+                } while (ask);
+            } else {
+                System.out.println("Remove food item failed!");
+            }
+        } while (continueLooping);
+    }
+
+    private void printFoodOrder() {
+        System.out.println("-------------------------------------------");
+        System.out.println("Current food order: ");
+
+        int totalFoodCost = 0;
+        int i = 1;
+
+        for (Food foodItem : manager.getReservationsList().get(reservationNr - 1).getFoodList()) {
+            System.out.println(i + ". Food name: " + foodItem.getName());
+            totalFoodCost += foodItem.getPrice();
+            i++;
+        }
+
+        System.out.println("Total: " + totalFoodCost);
+        System.out.println("-------------------------------------------");
+    }
 
     private void chooseSectionType() {
         boolean continueLooping = true;
@@ -264,6 +279,7 @@ public final class User {
     private void printAllPlanesAndSeats() {
         for (Airplane plane : manager.getPlanesList()) {
             System.out.println('\n' + "---Flight " + plane.getFlightNr() + "---");
+            System.out.println("Destination: " + plane.getDestination());
             System.out.println("Available seats--> " + '\n' +
                     "Business section: " + plane.numberOfAvailableBusinessSeats() + '\n' +
                     "Economy section: " + plane.numberOfAvailableEconomySeats());
@@ -271,7 +287,7 @@ public final class User {
         }
     }
 
-    private void chooseAirplane(){
+    private void chooseAirplane() {
         boolean loop = true;
 
         do {
@@ -283,17 +299,16 @@ public final class User {
 
                 System.out.println("Flight " + flightNr + " chosen...");
                 loop = false;
-            }else{
+            } else {
                 System.out.println("Airplane doesn't exist, can you even read?");
             }
-        }while (loop);
+        } while (loop);
     }
 
     private void chooseSeat() {
         int selection = 0;
 
         do {
-            //index-1 för att användaren anger index som är 1 mer än i verkligheten..
             seatNr = manager.getPlane(airplaneIndex - 1).reserveSeat(sectionType);
 
             if (seatNr != null) {
@@ -324,19 +339,17 @@ public final class User {
         } while (seatNr == null);
     }
 
-
-
     private void printReceipt() {
         System.out.println("-------------------------------------");
-        System.out.println("Receipt for customer: " + manager.getReservationsList().get(reservationNr-1).getCustomer().getFirstName() +
-                " " + manager.getReservationsList().get(reservationNr-1).getCustomer().getLastName());
-        System.out.println("Ticket price:\t" + manager.getReservationsList().get(reservationNr-1).getTicket().getPrice());
-        System.out.println("Food price: \t" + manager.getReservationsList().get(reservationNr-1).calculateTotalFoodPrice());
-        System.out.println("Total price: \t" + manager.getReservationsList().get(reservationNr-1).calculateTotalPrice());
+        System.out.println("Receipt for customer: " + manager.getReservationsList().get(reservationNr - 1).getCustomer().getFirstName() +
+                " " + manager.getReservationsList().get(reservationNr - 1).getCustomer().getLastName());
+        System.out.println("Ticket price:\t" + manager.getReservationsList().get(reservationNr - 1).getTicket().getPrice());
+        System.out.println("Food price: \t" + manager.getReservationsList().get(reservationNr - 1).calculateTotalFoodPrice());
+        System.out.println("Total price: \t" + manager.getReservationsList().get(reservationNr - 1).calculateTotalPrice());
         System.out.println("-------------------------------------");
     }
 
-    private void printFood(){
+    private void printFood() {
         System.out.println("Available food items from menu:");
 
         int foodNr = 1;
@@ -346,7 +359,7 @@ public final class User {
             foodList = manager.getFoodManager().getBusinessFoodList();
         } else if (sectionType == SectionType.ECONOMY) {
             foodList = manager.getFoodManager().getEconomyFoodList();
-        }else {
+        } else {
             return;
         }
 

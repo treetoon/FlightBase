@@ -50,9 +50,13 @@ public class Reservation {
         foodList.add(food);
     }
 
-    public void removeFoodItem(int index) {
-        foodList.remove(index);
+    public String removeFoodItem(int index) {
+        if (index < foodList.size() && index >=0) {
+            Food food=foodList.remove(index);
+            return food.getName();
+        }
 
+        return null;
     }
 
     public Customer getCustomer() {

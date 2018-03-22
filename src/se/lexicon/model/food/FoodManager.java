@@ -28,4 +28,5 @@ public class FoodManager {
     public List<Food> getBusinessFoodList() {
         return businessFoodList;
     }
+
 }

@@ -22,8 +22,16 @@ public class Airplane {
         businessSeatList = new LinkedHashMap<>();
         economySeatList = new LinkedHashMap<>();
 
-        this.businessSectionPrice=businessSectionPrice;
-        this.economySectionPrice=economySectionPrice;
+        this.businessSectionPrice = businessSectionPrice;
+        this.economySectionPrice = economySectionPrice;
+        this.destination = destination;
+
+        assignSeats(numOfSeats);
+    }
+
+    public void assignSeats(int numOfSeats) {
+        businessSeatList.clear();
+        economySeatList.clear();
 
         int numberOfRows = numOfSeats / 6;
         int remainingSeats = numOfSeats % 6;
@@ -54,6 +62,41 @@ public class Airplane {
                 seatLetter++;
             }
         }
+
+        System.out.println("-------------------------------");
+        System.out.println("Business:");
+        for ( String key : businessSeatList.keySet() ) {
+            System.out.println( key );
+        }
+        System.out.println("-------------------------------");
+
+        System.out.println("Economy");
+        for ( String key : economySeatList.keySet() ) {
+            System.out.println( key );
+        }
+        System.out.println("-------------------------------");
+
+
+    }
+
+    //Förutsätter att planen är i renoveringsläge och det ej finns bokningar..
+    public void addSeat(int numOfSeats) {
+        int currentTotalSeats = businessSeatList.size()+ economySeatList.size();
+        int newTotalSeats = currentTotalSeats + numOfSeats;
+
+        assignSeats(newTotalSeats);
+    }
+
+    public boolean removeSeat(int numOfSeats) {
+        int currentTotalSeats = businessSeatList.size()+ economySeatList.size();
+        int newTotalSeats = currentTotalSeats - numOfSeats;
+
+        if (newTotalSeats>0) {
+            assignSeats(newTotalSeats);
+            return true;
+        }
+
+        return false;
     }
 
     public int getFlightNr() {
@@ -80,16 +123,16 @@ public class Airplane {
         return numberOfAvailableSeats(SectionType.ECONOMY);
     }
 
-    private int numberOfAvailableSeats(SectionType type){
+    private int numberOfAvailableSeats(SectionType type) {
         Iterator<Map.Entry<String, Boolean>> entries = null;
         int availableSeats = 0;
 
-        if(type == SectionType.BUSINESS)
+        if (type == SectionType.BUSINESS)
             entries = businessSeatList.entrySet().iterator();
-        else if(type == SectionType.ECONOMY)
+        else if (type == SectionType.ECONOMY)
             entries = economySeatList.entrySet().iterator();
 
-        if(entries != null) {
+        if (entries != null) {
             while (entries.hasNext()) {
                 Map.Entry<String, Boolean> entry = entries.next();
 
@@ -110,7 +153,7 @@ public class Airplane {
             entries = economySeatList.entrySet().iterator();
         }
 
-        if (entries != null){
+        if (entries != null) {
             while (entries.hasNext()) {
                 Map.Entry<String, Boolean> entry = entries.next();
 
@@ -135,15 +178,12 @@ public class Airplane {
                     entry.setValue(false);
                 }
             }
-            if(i == 1)
+            if (i == 1)
                 entries = economySeatList.entrySet().iterator();
         }
     }
 
-    public void addSeat() {
+    public String getDestination() {
+        return destination;
     }
-
-    public void removeSeat() {
-    }
-
 }

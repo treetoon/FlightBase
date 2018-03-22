@@ -35,13 +35,4 @@ public class Ticket {
         this.price = price;
     }
 
-    @Override
-    public String toString() {
-        return "Ticket{" +
-                "seatNumber='" + seatNumber + '\'' +
-                ", flightNumber=" + flightNumber +
-                ", price=" + price +
-                ", sectionType=" + sectionType +
-                '}';
-    }
 }
