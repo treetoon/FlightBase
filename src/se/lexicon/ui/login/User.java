@@ -182,9 +182,9 @@ public final class User {
     private void createFoodReservation() {
         boolean continueLooping = true;
         boolean ask = true;
-        totalFoodCost = 0;
 
         do {
+            totalFoodCost = 0;
             printFood();
 
             System.out.println("Which food item would you like?");
@@ -228,6 +228,7 @@ public final class User {
                         continueLooping = false;
                         System.out.println("Finished adding food items");
                         manager.getReservationsList().get(reservationNr-1).calculateTotalPrice();     //Sets total price
+
                         printReceipt();
                         break;
                     default:
