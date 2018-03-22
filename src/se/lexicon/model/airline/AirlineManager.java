@@ -37,10 +37,10 @@ public class AirlineManager {
 
     public int getTicketPrice(int flightNr, SectionType sectionType) {
         for (Airplane airplane : airplaneList) {
-            if (airplane.getFlightNr()==flightNr) {
-                if (sectionType==SectionType.BUSINESS) {
+            if (airplane.getFlightNr() == flightNr) {
+                if (sectionType == SectionType.BUSINESS) {
                     return airplane.getBusinessSectionPrice();
-                } else if (sectionType==SectionType.ECONOMY) {
+                } else if (sectionType == SectionType.ECONOMY) {
                     return airplane.getEconomySectionPrice();
                 }
             }
@@ -74,7 +74,7 @@ public class AirlineManager {
 
     public int createReservation(String firstName, String lastName, String address, String phoneNr,
                                  String seatNr, int flightNr, SectionType sectionType) {
-        Customer customer=new Customer(firstName, lastName, address, phoneNr);
+        Customer customer = new Customer(firstName, lastName, address, phoneNr);
         Ticket ticket = new Ticket(seatNr, flightNr, getTicketPrice(flightNr, sectionType), sectionType);
 
         Reservation reservation = new Reservation(customer, ticket);
@@ -87,18 +87,57 @@ public class AirlineManager {
 
     }
 
+    //Removes reservation and unreserves seat on airplane
+    //FIXA!!
+    //Testa unreserveSeat delen också..
+    public boolean deleteReservation(int reservationNr) {
+        int flightNr=0;
+        String seatNr=null;
+
+        if (reservationNr > 0) {
+
+            Reservation reservation=getReservation(reservationNr);
+
+            boolean returnVal=reservationsList.remove(reservation);
+
+            System.out.println(returnVal);
+
+            if (reservation != null) {
+                flightNr=reservation.getTicket().getFlightNumber();
+                seatNr=reservation.getTicket().getSeatNumber();
+
+                System.out.println(airplaneList.get(flightNr-1));
+
+                if (airplaneList.get(flightNr-1).unreserveSeat(seatNr)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public Reservation getReservation(int reservationNr) {
+        for (Reservation reservation : reservationsList) {
+            if (reservation.getReservationNumber()==reservationNr) {
+                return reservation;
+            }
+        }
+
+        return null;
+    }
+
     private int calculateProfit() {
         return reservationsList.stream().reduce(0,
                 (sum, reservation) -> sum += reservation.calculateTotalPrice(),
                 (sum1, sum2) -> sum1 + sum2);
     }
 
-    public int getIncome(){
+    public int getIncome() {
         return calculateProfit();
     }
 
-    public int getProfit(){
-        return (int)((double)calculateProfit() * companyProfitPercentage);
+    public int getProfit() {
+        return (int) ((double) calculateProfit() * companyProfitPercentage);
     }
 
     private void reserveSeat() {

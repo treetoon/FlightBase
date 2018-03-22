@@ -152,7 +152,7 @@ public class Airplane {
         return null;
     }
 
-    public void unreserveSeat(String seat) {
+    public boolean unreserveSeat(String seat) {
         Iterator<Map.Entry<String, Boolean>> entries = businessSeatList.entrySet().iterator();
 
         for (int i = 1; i <= 2; i++) { //loop twice for each list
@@ -161,11 +161,14 @@ public class Airplane {
 
                 if (entry.getKey().equals(seat)) {
                     entry.setValue(false);
+                    return true;
                 }
             }
             if (i == 1)
                 entries = economySeatList.entrySet().iterator();
         }
+
+        return false;
     }
 
     public String getDestination() {

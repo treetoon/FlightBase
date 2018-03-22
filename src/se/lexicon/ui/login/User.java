@@ -27,6 +27,7 @@ public final class User {
     public void printMenu() {
         System.out.println("1. Create Reservation");
         System.out.println("2. Edit Reservation");
+        System.out.println("3. Delete Reservation");
         System.out.println("Q. Quit" + '\n');
     }
 
@@ -48,6 +49,7 @@ public final class User {
         createFoodReservation();
     }
 
+    //Ändra så att kund ej behöver lägga till fooditems om han inte vill?
     private void createFoodReservation() {
         boolean continueLooping = true;
         boolean ask = true;
@@ -122,9 +124,37 @@ public final class User {
         } while (continueLooping);
     }
 
+    public void deleteReservation() {
+        System.out.println("Which reservation would you like to delete? Input reservation number");
+        reservationNr = scanner.nextInt();
+
+        if (reservationNr==0) {
+            System.out.println("Canceling...");
+            return;
+        }
+
+        //Checks if reservation number is valid
+        if (reservationNr > manager.getReservationsList().size()) {
+            System.out.println("Invalid reservation number. Try again!");
+            deleteReservation();
+        }
+
+        if (manager.deleteReservation(reservationNr)) {
+            System.out.println("Delete reservation successful!");
+        } else {
+            System.out.println("Delete reservation failed. Try again!");
+            deleteReservation();
+        }
+    }
+
     public void editReservation() {
         System.out.println("Which reservation would you like to edit? Input reservation number");
         reservationNr = scanner.nextInt();
+
+        if (reservationNr==0) {
+            System.out.println("Canceling...");
+            return;
+        }
 
         //Checks if reservation number is valid
         if (reservationNr > manager.getReservationsList().size()) {
@@ -176,6 +206,11 @@ public final class User {
 
             System.out.println("Which food item would you like to remove?");
             int foodChoice = scanner.nextInt();
+
+            if (foodChoice==0) {
+                System.out.println("Canceling...");
+                return;
+            }
 
             String foodName = manager.getReservationsList().get(reservationNr - 1).removeFoodItem(foodChoice - 1);
 
