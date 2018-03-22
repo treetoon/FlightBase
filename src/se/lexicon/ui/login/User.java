@@ -49,6 +49,24 @@ public final class User {
     }
 
     public void editReservation() {
+        System.out.println("Which reservation would you like to edit (input reservation nr)? ");
+        int reservationNr=scanner.nextInt();
+
+        if (manager.getReservationsList().get(reservationNr-1)!=null) {
+            System.out.println("Edit current food order");
+            System.out.println("CURRENT FOOD ORDER: ");
+
+            int totalFoodCost=0;
+
+            for (Food foodItem : manager.getReservationsList().get(reservationNr-1).getFoodList()) {
+                System.out.println("Food name: " + foodItem.getName());
+                totalFoodCost += foodItem.getPrice();
+            }
+
+            System.out.println("Total: " + totalFoodCost);
+            System.out.println("-------------------------------------------");
+            System.out.println("Would you like to add more food items? (y/n) ");
+        }
 
     }
 

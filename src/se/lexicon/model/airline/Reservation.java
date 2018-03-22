@@ -32,8 +32,6 @@ public class Reservation {
 
     //calculates&sets total price (food+ticket)
     public int calculateTotalPrice() {
-        int totalPrice=0;
-
         for (Food food : foodList) {
             totalPrice+=food.getPrice();
         }
