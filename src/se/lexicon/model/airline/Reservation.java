@@ -50,6 +50,11 @@ public class Reservation {
         foodList.add(food);
     }
 
+    public void removeFoodItem(int index) {
+        foodList.remove(index);
+
+    }
+
     public Customer getCustomer() {
         return customer;
     }

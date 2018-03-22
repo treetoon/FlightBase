@@ -45,7 +45,7 @@ public final class User {
         System.out.println("Ticket with seat number " + seatNr + " created");
         System.out.println("-------------------------------------------");
 
-        createFoodReservation();
+        createFoodReservation(true);
     }
 
     public void editReservation() {
@@ -53,8 +53,9 @@ public final class User {
         reservationNr=scanner.nextInt();
 
         if (manager.getReservationsList().get(reservationNr-1)!=null) {
-            System.out.println("Edit current food order");
+            sectionType=manager.getReservationsList().get(reservationNr-1).getTicket().getSectionType();
 
+            System.out.println("Edit current food order");
 
             boolean continueLoop=false;
 
@@ -71,19 +72,21 @@ public final class User {
                     continueLoop=true;
                 }
             } while(continueLoop);
-
         }
-
     }
 
+    //används bara vid editReservation.. KOLLA OM DETTA STÄMMER
     private void printFoodOrder() {
         System.out.println("CURRENT FOOD ORDER: ");
 
-        int totalFoodCost=0;
+        int totalFoodCost = 0;
 
-        for (Food foodItem : manager.getReservationsList().get(reservationNr-1).getFoodList()) {
-            System.out.println("Food name: " + foodItem.getName());
+        int i = 1;
+
+        for (Food foodItem : manager.getReservationsList().get(reservationNr - 1).getFoodList()) {
+            System.out.println(i + ". Food name: " + foodItem.getName());
             totalFoodCost += foodItem.getPrice();
+            i++;
         }
 
         System.out.println("Total: " + totalFoodCost);
@@ -93,11 +96,123 @@ public final class User {
     private void addFood() {
         printFoodOrder();
 
-        createFoodReservation();
+        createFoodReservation(true);
     }
 
+    //EDITERA DENNA METOD!!
     private void removeFood() {
+        printFoodOrder();
 
+        boolean continueLooping = true;
+        boolean ask = true;
+
+        do {
+            totalFoodCost = 0;
+
+            System.out.println("Which food item would you like to remove?");
+            int foodChoice = scanner.nextInt();
+
+            manager.getReservationsList().get(reservationNr-1).removeFoodItem(foodChoice-1);
+
+
+//            System.out.println("CURRENT FOOD ORDER: ");
+//
+//            for (Food foodItem : manager.getReservationsList().get(reservationNr-1).getFoodList()) {
+//                System.out.println("Food name: " + foodItem.getName());
+//                totalFoodCost += foodItem.getPrice();
+//            }
+//
+//            System.out.println("Total: " + totalFoodCost);
+//            System.out.println("-------------------------------------------");
+//            System.out.println("Would you like to add more food items? (y/n) ");
+//
+//            do {
+//                String answer = scanner.next();
+//
+//                switch (answer) {
+//                    case "Y":
+//                    case "y":
+//                        ask = false;
+//                        break;
+//                    case "N":
+//                    case "n":
+//                        ask = false;
+//                        continueLooping = false;
+//                        System.out.println("Finished adding food items");
+//                        manager.getReservationsList().get(reservationNr-1).calculateTotalPrice();     //Sets total price
+//
+//                        if (printsReceipt) {
+//                            printReceipt();
+//                        }
+//                        break;
+//                    default:
+//                        System.out.println("Please write y or n...");
+//                        break;
+//                }
+//            } while (ask);
+        } while (continueLooping);
+    }
+
+    private void createFoodReservation(boolean printsReceipt) {
+        boolean continueLooping = true;
+        boolean ask = true;
+
+        do {
+            totalFoodCost = 0;
+            printFood();
+
+            System.out.println("Which food item would you like?");
+            int foodChoice = scanner.nextInt();
+
+            Food food = null;
+
+            if (sectionType == SectionType.BUSINESS) {
+                food = manager.getFoodManager().getBusinessFoodList().get(foodChoice - 1);
+                manager.getReservationsList().get(reservationNr-1).addFoodItem(food);
+            } else if (sectionType == SectionType.ECONOMY) {
+                food = manager.getFoodManager().getEconomyFoodList().get(foodChoice - 1);
+                manager.getReservationsList().get(reservationNr-1).addFoodItem(food);
+            }
+
+            if (food != null)
+                System.out.println(food.getName() + " added!");
+
+            System.out.println("CURRENT FOOD ORDER: ");
+
+            for (Food foodItem : manager.getReservationsList().get(reservationNr-1).getFoodList()) {
+                System.out.println("Food name: " + foodItem.getName());
+                totalFoodCost += foodItem.getPrice();
+            }
+
+            System.out.println("Total: " + totalFoodCost);
+            System.out.println("-------------------------------------------");
+            System.out.println("Would you like to add more food items? (y/n) ");
+
+            do {
+                String answer = scanner.next();
+
+                switch (answer) {
+                    case "Y":
+                    case "y":
+                        ask = false;
+                        break;
+                    case "N":
+                    case "n":
+                        ask = false;
+                        continueLooping = false;
+                        System.out.println("Finished adding food items");
+                        manager.getReservationsList().get(reservationNr-1).calculateTotalPrice();     //Sets total price
+
+                        if (printsReceipt) {
+                            printReceipt();
+                        }
+                        break;
+                    default:
+                        System.out.println("Please write y or n...");
+                        break;
+                }
+            } while (ask);
+        } while (continueLooping);
     }
 
     /*
@@ -209,65 +324,7 @@ public final class User {
         } while (seatNr == null);
     }
 
-    private void createFoodReservation(boolean printsReceipt) {
-        boolean continueLooping = true;
-        boolean ask = true;
 
-        do {
-            totalFoodCost = 0;
-            printFood();
-
-            System.out.println("Which food item would you like?");
-            int foodChoice = scanner.nextInt();
-
-            Food food = null;
-
-            if (sectionType == SectionType.BUSINESS) {
-                food = manager.getFoodManager().getBusinessFoodList().get(foodChoice - 1);
-                manager.getReservationsList().get(reservationNr-1).addFoodItem(food);
-            } else if (sectionType == SectionType.ECONOMY) {
-                food = manager.getFoodManager().getEconomyFoodList().get(foodChoice - 1);
-                manager.getReservationsList().get(reservationNr-1).addFoodItem(food);
-            }
-
-            if (food != null)
-                System.out.println(food.getName() + " added!");
-
-            System.out.println("CURRENT FOOD ORDER: ");
-
-            for (Food foodItem : manager.getReservationsList().get(reservationNr-1).getFoodList()) {
-                System.out.println("Food name: " + foodItem.getName());
-                totalFoodCost += foodItem.getPrice();
-            }
-
-            System.out.println("Total: " + totalFoodCost);
-            System.out.println("-------------------------------------------");
-            System.out.println("Would you like to add more food items? (y/n) ");
-
-            do {
-                String answer = scanner.next();
-
-                switch (answer) {
-                    case "Y":
-                    case "y":
-                        ask = false;
-                        break;
-                    case "N":
-                    case "n":
-                        ask = false;
-                        continueLooping = false;
-                        System.out.println("Finished adding food items");
-                        manager.getReservationsList().get(reservationNr-1).calculateTotalPrice();     //Sets total price
-
-                        printReceipt();
-                        break;
-                    default:
-                        System.out.println("Please write y or n...");
-                        break;
-                }
-            } while (ask);
-        } while (continueLooping);
-    }
 
     private void printReceipt() {
         System.out.println("-------------------------------------");
