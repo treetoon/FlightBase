@@ -31,7 +31,7 @@ public final class User {
     }
 
     public void createReservation() {
-        int price = 2000;
+        //int price = 2000;
 
         chooseSectionType();
         createCustomer();
@@ -42,7 +42,7 @@ public final class User {
         chooseSeat();
 
         reservationNr = manager.createReservation(firstName, lastName, address, phoneNr,
-                seatNr, flightNr, price, sectionType);
+                seatNr, flightNr, sectionType);
 
         System.out.println("Ticket with seat number " + seatNr + " created");
         System.out.println("-------------------------------------------");
@@ -177,10 +177,10 @@ public final class User {
 
             if (sectionType == SectionType.BUSINESS) {
                 food = manager.getFoodManager().getBusinessFoodList().get(foodChoice - 1);
-                manager.getReservationsList().get(reservationNr).add(food);
+                manager.getReservationsList().get(reservationNr - 1).addFoodItem(food);
             } else if (sectionType == SectionType.ECONOMY) {
                 food = manager.getFoodManager().getEconomyFoodList().get(foodChoice - 1);
-                reservation.getFoodList().add(food);
+                manager.getReservationsList().get(reservationNr - 1).addFoodItem(food);
             }
 
             if (food != null)
@@ -188,7 +188,7 @@ public final class User {
 
             System.out.println("CURRENT FOOD ORDER: ");
 
-            for (Food foodItem : reservation.getFoodList()) {
+            for (Food foodItem : manager.getReservationsList().get(reservationNr-1).getFoodList()) {
                 System.out.println("Food name: " + foodItem.getName());
                 totalFoodCost += foodItem.getPrice();
             }

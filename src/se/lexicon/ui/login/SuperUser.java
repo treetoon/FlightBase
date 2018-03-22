@@ -1,6 +1,8 @@
 package se.lexicon.ui.login;
 
 import se.lexicon.model.airline.AirlineManager;
+import se.lexicon.model.airline.Airplane;
+
 public final class SuperUser {
 
     private static AirlineManager manager = null;
@@ -19,5 +21,10 @@ public final class SuperUser {
 
     public void Menu(){
         
+    }
+
+    public void createAirplane(){
+        //input flyg info
+        //manager.addPlane(new Airplane(0));
     }
 }
