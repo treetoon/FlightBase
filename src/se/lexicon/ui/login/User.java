@@ -80,12 +80,10 @@ public final class User {
         System.out.println("CURRENT FOOD ORDER: ");
 
         int totalFoodCost=0;
-        int i=1;
 
         for (Food foodItem : manager.getReservationsList().get(reservationNr-1).getFoodList()) {
-            System.out.println("(" + i + ")" + " Food name: " + foodItem.getName());
+            System.out.println("Food name: " + foodItem.getName());
             totalFoodCost += foodItem.getPrice();
-            i++;
         }
 
         System.out.println("Total: " + totalFoodCost);
@@ -211,7 +209,7 @@ public final class User {
         } while (seatNr == null);
     }
 
-    private void createFoodReservation() {
+    private void createFoodReservation(boolean printsReceipt) {
         boolean continueLooping = true;
         boolean ask = true;
 
