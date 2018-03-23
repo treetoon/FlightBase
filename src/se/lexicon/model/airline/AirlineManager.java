@@ -4,6 +4,7 @@ import se.lexicon.model.airline.types.SectionType;
 import se.lexicon.model.food.FoodManager;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -66,12 +67,25 @@ public class AirlineManager {
         return reservationsList;
     }
 
-    public void addPlane(Airplane plane) {
-        airplaneList.add(plane);
+    public boolean addPlane(Airplane plane) {
+        if(plane != null) {
+            airplaneList.add(plane);
+            return true;
+        }else {
+            return false;
+        }
     }
 
-    public void list() {
+    public boolean removePlane(int flightNr) {
+        Iterator<Airplane> it = airplaneList.iterator();
 
+        while (it.hasNext()) {
+            if(it.next().getFlightNr() == flightNr){
+                it.remove(); //remove current element
+                return true;
+            }
+        }
+        return false;
     }
 
     public void addSeat() {

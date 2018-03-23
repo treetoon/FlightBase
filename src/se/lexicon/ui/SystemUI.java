@@ -83,10 +83,18 @@ public class SystemUI {
 
 			switch (keyboard) {
 				case "1":
+					SystemFunctionality.superUser.createAirplane();
 					break;
 				case "2":
+					SystemFunctionality.superUser.removeAirplane();
 					break;
 				case "3":
+					SystemFunctionality.superUser.addSeat();
+					break;
+				case "4":
+					SystemFunctionality.superUser.removeSeat();
+					break;
+				case "5":
 					SystemFunctionality.superUser.printAirlineProfit();
 					break;
 				case "q":
