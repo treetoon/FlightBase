@@ -1,6 +1,5 @@
 package se.lexicon.model.airline;
 
-import se.lexicon.model.airline.types.SectionType;
 import se.lexicon.model.food.Food;
 
 import java.util.ArrayList;
@@ -31,7 +30,7 @@ public class Reservation {
         return reservationNumber;
     }
 
-    //calculates&sets total price (food+ticket)
+    //Calculates and sets total price (food+ticket)
     public int calculateTotalPrice() {
         totalPrice = 0; //reset
         return totalPrice += ticket.getPrice() + calculateTotalFoodPrice();

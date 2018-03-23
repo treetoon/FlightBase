@@ -20,7 +20,13 @@ public final class SuperUser {
         System.out.println("3. Add Seat To a Plane");
         System.out.println("4. Remove Seat To a Plane");
         System.out.println("5. Show Airline Profit");
-        System.out.println("Q. Quit SuperUser" + '\n');
+        System.out.println("Q. Logout SuperUser" + '\n');
+    }
+
+    public void printAirlineProfit() {
+        System.out.println("---Airline Info---");
+        System.out.println("Income: " + manager.getIncome());
+        System.out.println("Profit: " + manager.getProfit() + '\n');
     }
 
     public boolean createAirplane() {
@@ -119,11 +125,5 @@ public final class SuperUser {
         } while (loop);
 
         return 0;
-    }
-
-    public void printAirlineProfit() {
-        System.out.println("---Airline Info---");
-        System.out.println("Income: " + manager.getIncome());
-        System.out.println("Profit: " + manager.getProfit() + '\n');
     }
 }

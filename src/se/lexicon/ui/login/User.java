@@ -12,13 +12,14 @@ public final class User {
     private Scanner scanner = new Scanner(System.in);
 
     private int reservationNr = 0;
+    private int flightNr = 0;
+    private int airplaneIndex = 0;
+    private int totalFoodCost = 0;
+
     private SectionType sectionType = null;
     private String firstName = null, lastName = null,
             address = null, phoneNr = null;
-    private int airplaneIndex = 0;
-    private int flightNr = 0;
     private String seatNr = null;
-    private int totalFoodCost = 0;
 
     public User(AirlineManager mgr) {
         manager = mgr;
@@ -28,6 +29,7 @@ public final class User {
         System.out.println("1. Create Reservation");
         System.out.println("2. Edit Reservation");
         System.out.println("3. Delete Reservation");
+        System.out.println("SU. Login as SuperUser-->");
         System.out.println("Q. Quit" + '\n');
     }
 
@@ -71,6 +73,67 @@ public final class User {
             }
         } while (ask);
     }
+
+    public void deleteReservation() {
+        System.out.println("Which reservation would you like to delete? Input reservation number");
+        reservationNr = scanner.nextInt();
+
+        if (reservationNr == 0) {
+            System.out.println("Canceling...");
+            return;
+        }
+
+        if (manager.deleteReservation(reservationNr)) {
+            System.out.println("Delete reservation successful!");
+        } else {
+            System.out.println("Delete reservation failed. Try again!");
+            deleteReservation();
+        }
+    }
+
+    public void editReservation() {
+        System.out.println("Which reservation would you like to edit? Input reservation number");
+        reservationNr = scanner.nextInt();
+
+        if (reservationNr == 0) {
+            System.out.println("Canceling...");
+            return;
+        }
+
+        //Checks if reservation number is valid
+        if (reservationNr > manager.getReservationsList().size()) {
+            System.out.println("Invalid reservation number. Try again!");
+            editReservation();
+        }
+
+        if (manager.getReservationsList().get(reservationNr - 1) != null) {
+            sectionType = manager.getReservationsList().get(reservationNr - 1).getTicket().getSectionType();
+
+            System.out.println("Editing current food order...");
+
+            boolean ask = false;
+
+            do {
+                System.out.println("Would you like to add (1) or remove (2) food items?");
+                int selection = scanner.nextInt();
+
+                if (selection == 1) {
+                    addFood();
+                } else if (selection == 2) {
+                    removeFood();
+                } else {
+                    System.out.println("Wrong choice. Try again!");
+                    ask = true;
+                }
+            } while (ask);
+
+        } else {
+            System.out.println("No reservation found. Try again!");
+            editReservation();
+        }
+    }
+
+    //Private Methods
 
     private void createFoodReservation() {
         boolean continueLooping = true;
@@ -144,65 +207,6 @@ public final class User {
                 }
             } while (ask);
         } while (continueLooping);
-    }
-
-    public void deleteReservation() {
-        System.out.println("Which reservation would you like to delete? Input reservation number");
-        reservationNr = scanner.nextInt();
-
-        if (reservationNr == 0) {
-            System.out.println("Canceling...");
-            return;
-        }
-
-        if (manager.deleteReservation(reservationNr)) {
-            System.out.println("Delete reservation successful!");
-        } else {
-            System.out.println("Delete reservation failed. Try again!");
-            deleteReservation();
-        }
-    }
-
-    public void editReservation() {
-        System.out.println("Which reservation would you like to edit? Input reservation number");
-        reservationNr = scanner.nextInt();
-
-        if (reservationNr == 0) {
-            System.out.println("Canceling...");
-            return;
-        }
-
-        //Checks if reservation number is valid
-        if (reservationNr > manager.getReservationsList().size()) {
-            System.out.println("Invalid reservation number. Try again!");
-            editReservation();
-        }
-
-        if (manager.getReservationsList().get(reservationNr - 1) != null) {
-            sectionType = manager.getReservationsList().get(reservationNr - 1).getTicket().getSectionType();
-
-            System.out.println("Editing current food order...");
-
-            boolean ask = false;
-
-            do {
-                System.out.println("Would you like to add (1) or remove (2) food items?");
-                int selection = scanner.nextInt();
-
-                if (selection == 1) {
-                    addFood();
-                } else if (selection == 2) {
-                    removeFood();
-                } else {
-                    System.out.println("Wrong choice. Try again!");
-                    ask = true;
-                }
-            } while (ask);
-
-        } else {
-            System.out.println("No reservation found. Try again!");
-            editReservation();
-        }
     }
 
     private void addFood() {

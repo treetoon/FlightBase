@@ -6,8 +6,6 @@ import se.lexicon.model.food.FoodManager;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 public class AirlineManager {
     private List<Airplane> airplaneList;
@@ -29,13 +27,20 @@ public class AirlineManager {
         return foodManager;
     }
 
-    //onödig
-//    public Airplane getPlane(int index) {
-//        if (index < airplaneList.size())
-//            return airplaneList.get(index);
-//
-//        return null;
-//    }
+    public Airplane getPlane(int index) {
+        if (index < airplaneList.size())
+            return airplaneList.get(index);
+
+        return null;
+    }
+
+    public int getIncome() {
+        return calculateIncome();
+    }
+
+    public int getProfit() {
+        return (int) ((double) calculateIncome() * companyProfitPercentage);
+    }
 
     public Airplane getPlaneByFlightNr(int flightNr) {
         for (Airplane plane : airplaneList) {
@@ -43,7 +48,6 @@ public class AirlineManager {
                 return plane;
             }
         }
-
         return null;
     }
 
@@ -69,10 +73,10 @@ public class AirlineManager {
     }
 
     public boolean addPlane(Airplane plane) {
-        if(plane != null) {
+        if (plane != null) {
             airplaneList.add(plane);
             return true;
-        }else {
+        } else {
             return false;
         }
     }
@@ -81,7 +85,7 @@ public class AirlineManager {
         Iterator<Airplane> it = airplaneList.iterator();
 
         while (it.hasNext()) {
-            if(it.next().getFlightNr() == flightNr){
+            if (it.next().getFlightNr() == flightNr) {
                 it.remove(); //remove current element
                 return true;
             }
@@ -91,23 +95,21 @@ public class AirlineManager {
 
     public boolean addSeat(int flightNr, int numOfSeats) {
         for (Airplane plane : airplaneList) {
-            if (plane.getFlightNr()==flightNr) {
+            if (plane.getFlightNr() == flightNr) {
                 plane.addSeat(numOfSeats);
                 return true;
             }
         }
-
         return false;
     }
 
     public boolean removeSeat(int flightNr, int numOfSeats) {
         for (Airplane plane : airplaneList) {
-            if (plane.getFlightNr()==flightNr) {
+            if (plane.getFlightNr() == flightNr) {
                 plane.removeSeat(numOfSeats);
                 return true;
             }
         }
-
         return false;
     }
 
@@ -122,11 +124,12 @@ public class AirlineManager {
         return reservation.getReservationNumber();
     }
 
-    public void editReservation() {
-
-    }
-
-    //Removes reservation and unreserves seat on airplane
+    /**
+     * Removes reservation and unreserves seat on airplane
+     *
+     * @param reservationNr
+     * @return true if reservation is deleted
+     */
     public boolean deleteReservation(int reservationNr) {
         int flightNr = 0;
         String seatNr = null;
@@ -145,32 +148,19 @@ public class AirlineManager {
                         return true;
                     }
                 }
-
                 index++;
             }
         }
         return false;
     }
 
-    private int calculateProfit() {
+    /**
+     * Calculates all food items and tickets for all customers
+     * @return int as currency
+     */
+    private int calculateIncome() {
         return reservationsList.stream().reduce(0,
                 (sum, reservation) -> sum += reservation.calculateTotalPrice(),
                 (sum1, sum2) -> sum1 + sum2);
-    }
-
-    public int getIncome() {
-        return calculateProfit();
-    }
-
-    public int getProfit() {
-        return (int) ((double) calculateProfit() * companyProfitPercentage);
-    }
-
-    private void reserveSeat() {
-
-    }
-
-    public int numberOfAvailableBusinessSeats() {
-        return 0;
     }
 }

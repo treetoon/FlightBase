@@ -29,6 +29,22 @@ public class Airplane {
         assignSeats(numOfSeats);
     }
 
+    public String getDestination() {
+        return destination;
+    }
+
+    public int getFlightNr() {
+        return flightNr;
+    }
+
+    public int getBusinessSectionPrice() {
+        return businessSectionPrice;
+    }
+
+    public int getEconomySectionPrice() {
+        return economySectionPrice;
+    }
+
     public void assignSeats(int numOfSeats) {
         businessSeatList.clear();
         economySeatList.clear();
@@ -79,20 +95,7 @@ public class Airplane {
             assignSeats(newTotalSeats);
             return true;
         }
-
         return false;
-    }
-
-    public int getFlightNr() {
-        return flightNr;
-    }
-
-    public int getBusinessSectionPrice() {
-        return businessSectionPrice;
-    }
-
-    public int getEconomySectionPrice() {
-        return economySectionPrice;
     }
 
     public int totalSeatsOfAirplane() {
@@ -166,11 +169,6 @@ public class Airplane {
             if (i == 1)
                 entries = economySeatList.entrySet().iterator();
         }
-
         return false;
-    }
-
-    public String getDestination() {
-        return destination;
     }
 }
