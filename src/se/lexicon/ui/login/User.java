@@ -59,7 +59,7 @@ public final class User {
             switch (answer) {
                 case "Y":
                 case "y":
-                    ask=false;
+                    ask = false;
                     createFoodReservation();
                     break;
                 case "N":
@@ -70,7 +70,7 @@ public final class User {
                     break;
                 default:
                     System.out.println("Please write y or n...");
-                    ask=true;
+                    ask = true;
                     break;
             }
         } while (ask);
@@ -119,7 +119,10 @@ public final class User {
                 System.out.println("Would you like to add (1) or remove (2) food items?");
                 int selection = scanner.nextInt();
 
-                if (selection == 1) {
+                if (selection == 0) {
+                    System.out.println("Canceling...");
+                    return;
+                } else if (selection == 1) {
                     addFood();
                 } else if (selection == 2) {
                     removeFood();
