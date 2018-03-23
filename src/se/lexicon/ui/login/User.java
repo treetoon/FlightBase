@@ -133,12 +133,6 @@ public final class User {
             return;
         }
 
-        //Checks if reservation number is valid
-        if (reservationNr > manager.getReservationsList().size()) {
-            System.out.println("Invalid reservation number. Try again!");
-            deleteReservation();
-        }
-
         if (manager.deleteReservation(reservationNr)) {
             System.out.println("Delete reservation successful!");
         } else {

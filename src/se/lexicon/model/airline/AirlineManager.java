@@ -88,42 +88,29 @@ public class AirlineManager {
     }
 
     //Removes reservation and unreserves seat on airplane
-    //FIXA!!
-    //Testa unreserveSeat delen också..
     public boolean deleteReservation(int reservationNr) {
         int flightNr=0;
         String seatNr=null;
 
         if (reservationNr > 0) {
+            int index=0;
 
-            Reservation reservation=getReservation(reservationNr);
+            for (Reservation reservation : reservationsList) {
+                if (reservation.getReservationNumber() == reservationNr) {
+                    flightNr = reservationsList.get(index).getTicket().getFlightNumber();
+                    seatNr = reservationsList.get(index).getTicket().getSeatNumber();
 
-            boolean returnVal=reservationsList.remove(reservation);
+                    reservationsList.remove(index);
 
-            System.out.println(returnVal);
-
-            if (reservation != null) {
-                flightNr=reservation.getTicket().getFlightNumber();
-                seatNr=reservation.getTicket().getSeatNumber();
-
-                System.out.println(airplaneList.get(flightNr-1));
-
-                if (airplaneList.get(flightNr-1).unreserveSeat(seatNr)) {
-                    return true;
+                    if (airplaneList.get(flightNr - 1).unreserveSeat(seatNr)) {
+                        return true;
+                    }
                 }
+
+                index++;
             }
         }
         return false;
-    }
-
-    public Reservation getReservation(int reservationNr) {
-        for (Reservation reservation : reservationsList) {
-            if (reservation.getReservationNumber()==reservationNr) {
-                return reservation;
-            }
-        }
-
-        return null;
     }
 
     private int calculateProfit() {
