@@ -56,8 +56,13 @@ public class AirlineManager {
         return reservationsList;
     }
 
-    public void addPlane(Airplane plane) {
-        airplaneList.add(plane);
+    public boolean addPlane(Airplane plane) {
+        if(plane != null) {
+            airplaneList.add(plane);
+            return true;
+        }else {
+            return false;
+        }
     }
 
     public void list() {
