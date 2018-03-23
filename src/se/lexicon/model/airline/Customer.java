@@ -1,7 +1,7 @@
 package se.lexicon.model.airline;
 
 public class Customer {
-    private int id;                     //???
+    private int id;
     private String firstName;
     private String lastName;
     private String address;

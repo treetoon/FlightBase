@@ -46,10 +46,32 @@ public final class User {
         System.out.println("Ticket with seat number " + seatNr + " created");
         System.out.println("-------------------------------------------");
 
-        createFoodReservation();
+        System.out.println("Would you like to order food (y/n)?");
+        boolean ask = false;
+
+        do {
+            String answer = scanner.next();
+
+            switch (answer) {
+                case "Y":
+                case "y":
+                    ask=false;
+                    createFoodReservation();
+                    break;
+                case "N":
+                case "n":
+                    ask = false;
+                    manager.getReservationsList().get(reservationNr - 1).calculateTotalPrice();     //Sets total price
+                    printReceipt();
+                    break;
+                default:
+                    System.out.println("Please write y or n...");
+                    ask=true;
+                    break;
+            }
+        } while (ask);
     }
 
-    //Ändra så att kund ej behöver lägga till fooditems om han inte vill?
     private void createFoodReservation() {
         boolean continueLooping = true;
         boolean ask = true;
@@ -128,7 +150,7 @@ public final class User {
         System.out.println("Which reservation would you like to delete? Input reservation number");
         reservationNr = scanner.nextInt();
 
-        if (reservationNr==0) {
+        if (reservationNr == 0) {
             System.out.println("Canceling...");
             return;
         }
@@ -145,7 +167,7 @@ public final class User {
         System.out.println("Which reservation would you like to edit? Input reservation number");
         reservationNr = scanner.nextInt();
 
-        if (reservationNr==0) {
+        if (reservationNr == 0) {
             System.out.println("Canceling...");
             return;
         }
@@ -201,7 +223,7 @@ public final class User {
             System.out.println("Which food item would you like to remove?");
             int foodChoice = scanner.nextInt();
 
-            if (foodChoice==0) {
+            if (foodChoice == 0) {
                 System.out.println("Canceling...");
                 return;
             }
