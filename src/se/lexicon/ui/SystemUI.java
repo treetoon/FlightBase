@@ -1,5 +1,6 @@
 package se.lexicon.ui;
 
+import se.lexicon.exception.AirlineException;
 import se.lexicon.ui.login.types.UserType;
 
 import java.util.Scanner;
@@ -45,12 +46,12 @@ public class SystemUI {
 
 					// Catch any and all program-specific exceptions here to de-clutter your switch-case
 					// in case of checked and/or custom exceptions.
-				} catch (Exception e) {
+				} catch (AirlineException e) {
 					System.out.println("Exception caught in inner try : " + e.getMessage());
 					isRunning = false;
 				}
 			} while (isRunning);
-		} catch (Exception e) {
+		} catch (AirlineException e) {
 			System.out.println("Exception caught in outer try : " + e.getMessage());
 		} finally {
 			// Any tasks needed for cleaning up/saving/etc should be performed here.
