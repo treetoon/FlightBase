@@ -1,5 +1,6 @@
 package se.lexicon.ui.login;
 
+import se.lexicon.exception.AirlineException;
 import se.lexicon.model.airline.*;
 import se.lexicon.model.airline.types.SectionType;
 import se.lexicon.model.food.Food;
@@ -22,7 +23,8 @@ public final class User {
     private String seatNr = null;
 
     public User(AirlineManager mgr) {
-        manager = mgr;
+        if (mgr != null)
+            manager = mgr;
     }
 
     public void printMenu() {

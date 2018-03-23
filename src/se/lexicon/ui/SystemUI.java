@@ -50,14 +50,14 @@ public class SystemUI {
 						default:
 							System.out.println(keyboard + " is not a valid option. Please try again.");
 					}
-
-				} catch (AirlineException e) {
+				} catch (Exception e /*AirlineException e //if setManager() is used
+				                    + cannot throw in static initializer*/) {
 					e.printStackTrace();
 				    System.out.println("Exception caught in inner try : " + e.getMessage());
 					isRunning = false;
 				}
 			} while (isRunning);
-		} catch (AirlineException e) {
+		} catch (Exception e) {
 			System.out.println("Exception caught in outer try : " + e.getMessage());
 		}
 	}

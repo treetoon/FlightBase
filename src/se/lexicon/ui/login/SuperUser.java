@@ -1,5 +1,6 @@
 package se.lexicon.ui.login;
 
+import se.lexicon.exception.AirlineException;
 import se.lexicon.model.airline.AirlineManager;
 import se.lexicon.model.airline.Airplane;
 
@@ -11,7 +12,8 @@ public final class SuperUser {
     private Scanner scanner = new Scanner(System.in);
 
     public SuperUser(AirlineManager mgr) {
-        manager = mgr;
+        if (mgr != null)
+            manager = mgr;
     }
 
     public void printMenu() {

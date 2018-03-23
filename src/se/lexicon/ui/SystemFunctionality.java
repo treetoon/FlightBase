@@ -1,5 +1,6 @@
 package se.lexicon.ui;
 
+import se.lexicon.exception.AirlineException;
 import se.lexicon.model.airline.AirlineManager;
 import se.lexicon.ui.login.SuperUser;
 import se.lexicon.ui.login.User;
@@ -19,14 +20,14 @@ public final class SystemFunctionality {
 
     private SystemFunctionality(){} //block instantiation
 
-    public static boolean setManager(AirlineManager mgr){
+    public static boolean setManager(AirlineManager mgr) throws AirlineException {
         if(mgr != null) {
             manager = mgr;
             user = new User(manager);
             superUser = new SuperUser(manager);
             return true;
         }
-        return false;
+        throw new AirlineException("Exception found when trying to assign AirlineManager...");
     }
 
     public static void printWelcomeScreen(){
