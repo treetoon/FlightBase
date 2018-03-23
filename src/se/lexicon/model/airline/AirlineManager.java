@@ -35,6 +35,16 @@ public class AirlineManager {
         return null;
     }
 
+    public Airplane getPlaneByFlightNr(int flightNr) {
+        for (Airplane plane : airplaneList) {
+            if (plane.getFlightNr() == flightNr) {
+                return plane;
+            }
+        }
+
+        return null;
+    }
+
     public int getTicketPrice(int flightNr, SectionType sectionType) {
         for (Airplane airplane : airplaneList) {
             if (airplane.getFlightNr() == flightNr) {
@@ -89,11 +99,11 @@ public class AirlineManager {
 
     //Removes reservation and unreserves seat on airplane
     public boolean deleteReservation(int reservationNr) {
-        int flightNr=0;
-        String seatNr=null;
+        int flightNr = 0;
+        String seatNr = null;
 
         if (reservationNr > 0) {
-            int index=0;
+            int index = 0;
 
             for (Reservation reservation : reservationsList) {
                 if (reservation.getReservationNumber() == reservationNr) {

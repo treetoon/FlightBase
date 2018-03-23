@@ -64,7 +64,6 @@ public class Airplane {
         }
     }
 
-    //Förutsätter att planen är i renoveringsläge och det ej finns bokningar..
     public void addSeat(int numOfSeats) {
         int currentTotalSeats = businessSeatList.size()+ economySeatList.size();
         int newTotalSeats = currentTotalSeats + numOfSeats;
