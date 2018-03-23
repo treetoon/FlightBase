@@ -12,13 +12,17 @@ public class FoodManager {
         economyFoodList=new ArrayList<>();
         businessFoodList=new ArrayList<>();
 
-        economyFoodList.add(new Food(100, "Meatballs"));
-        economyFoodList.add(new Food(200, "Spaghetti"));
-        economyFoodList.add(new Food(200, "Pizza"));
+        economyFoodList.add(new Food(60, "Meatballs"));
+        economyFoodList.add(new Food(70, "Spaghetti"));
+        economyFoodList.add(new Food(80, "Pizza"));
+        economyFoodList.add(new Food(20, "Coca-Cola"));
+        economyFoodList.add(new Food(30, "Mineral water"));
 
-        businessFoodList.add(new Food(100, "Entrecote"));
+        businessFoodList.add(new Food(150, "Entrecote"));
         businessFoodList.add(new Food(200, "Froglegs"));
         businessFoodList.add(new Food(200, "Caviar"));
+        businessFoodList.add(new Food(100, "Wine"));
+        businessFoodList.add(new Food(150, "Champagne"));
     }
 
     public List<Food> getEconomyFoodList() {
