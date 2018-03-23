@@ -15,10 +15,6 @@ public final class SuperUser {
     }
 
     public void printMenu() {
-
-        //TILLFÄLLIGT KOD. TA BORT!!
-        addSeat();
-
         System.out.println("1. Add Aeroplane");
         System.out.println("2. Remove Aeroplane");
         System.out.println("3. Add Seat To a Plane");
@@ -40,10 +36,10 @@ public final class SuperUser {
         System.out.println("What's the current destination?");
         String destination = scanner.next();
 
-        if(manager.addPlane(new Airplane(numOfSeats, businessSectionPrice, economySectionPrice, destination))){
+        if (manager.addPlane(new Airplane(numOfSeats, businessSectionPrice, economySectionPrice, destination))) {
             System.out.println("Aeroplane added!" + '\n');
             return true;
-        }else{
+        } else {
             System.out.println("Could not add..." + '\n');
             return false;
         }
@@ -57,31 +53,51 @@ public final class SuperUser {
 
         System.out.println("Which aeroplane would you like to remove?" + '\n' + "Enter Flight Number: ");
 
-        if(manager.removePlane(scanner.nextInt())){
+        if (manager.removePlane(scanner.nextInt())) {
             System.out.println("Aeroplane removed!" + '\n');
             return true;
-        }else{
+        } else {
             System.out.println("Could not remove..." + '\n');
             return false;
         }
     }
 
     public void addSeat() {
+        int flightNr = chooseAirplane();
+
+        System.out.print("How many seats would you like to add?");
+        int numOfSeats = scanner.nextInt();
+
+        if (manager.addSeat(flightNr, numOfSeats)) {
+            System.out.println("Added seats successfully");
+        } else {
+            System.out.println("Added seats failed");
+        }
 
     }
 
     public void removeSeat() {
+        int flightNr = chooseAirplane();
 
+        System.out.print("How many seats would you like to remove?");
+        int numOfSeats = scanner.nextInt();
+
+        if (manager.removeSeat(flightNr, numOfSeats)) {
+            System.out.println("Removed seats successfully");
+        } else {
+            System.out.println("Remove seats failed");
+        }
     }
 
-    public void addSeat() {
-        Scanner scanner=new Scanner(System.in);
-        int index=1;
+    public int chooseAirplane() {
+        scanner = new Scanner(System.in);
+        int index = 1;
+        int flightNr = 0;
 
-        Airplane currentAirplane=null;
+        Airplane currentAirplane = null;
 
         for (Airplane plane : manager.getPlanesList()) {
-            System.out.println("(" + index + ")" + " Flight " + plane.getFlightNr() + ": " + " Destination " + plane.getDestination());
+            System.out.println("Flight " + plane.getFlightNr() + ": " + " Destination " + plane.getDestination());
             index++;
         }
         boolean loop = true;
@@ -89,23 +105,20 @@ public final class SuperUser {
         do {
             System.out.print("Choose airplane: ");
             int airplaneChosenIndex = scanner.nextInt();
-            int flightNr=manager.getPlane(airplaneChosenIndex-1).getFlightNr();
+            flightNr = manager.getPlaneByFlightNr(airplaneChosenIndex).getFlightNr();
 
-            currentAirplane=manager.getPlaneByFlightNr(flightNr);
+            currentAirplane = manager.getPlaneByFlightNr(flightNr);
 
             if (currentAirplane != null) {
                 System.out.println("Flight " + flightNr + " chosen...");
                 loop = false;
+                return flightNr;
             } else {
                 System.out.println("Airplane doesn't exist, can you even read?");
             }
         } while (loop);
 
-        manager.addSeat();
-
-
-
-
+        return 0;
     }
 
     public void printAirlineProfit() {

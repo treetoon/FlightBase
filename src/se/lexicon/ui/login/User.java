@@ -345,9 +345,8 @@ public final class User {
             System.out.print("Choose airplane: ");
             airplaneIndex = scanner.nextInt();
 
-            if (manager.getPlane(airplaneIndex - 1) != null) {
-                flightNr = manager.getPlane(airplaneIndex - 1).getFlightNr();
-
+            if (manager.getPlaneByFlightNr(airplaneIndex) != null) {
+                flightNr = manager.getPlaneByFlightNr(airplaneIndex).getFlightNr();
                 System.out.println("Flight " + flightNr + " chosen...");
                 loop = false;
             } else {
@@ -360,7 +359,7 @@ public final class User {
         int selection = 0;
 
         do {
-            seatNr = manager.getPlane(airplaneIndex - 1).reserveSeat(sectionType);
+            seatNr = manager.getPlaneByFlightNr(airplaneIndex).reserveSeat(sectionType);
 
             if (seatNr != null) {
                 break;
@@ -376,7 +375,7 @@ public final class User {
                 switch (selection) {
                     case 1:
                         chooseSectionType();
-                        seatNr = manager.getPlane(airplaneIndex - 1).reserveSeat(sectionType);
+                        seatNr = manager.getPlaneByFlightNr(airplaneIndex).reserveSeat(sectionType);
                         continueLoop = false;
                         break;
                     case 2:

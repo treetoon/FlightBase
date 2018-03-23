@@ -29,12 +29,13 @@ public class AirlineManager {
         return foodManager;
     }
 
-    public Airplane getPlane(int index) {
-        if (index < airplaneList.size())
-            return airplaneList.get(index);
-
-        return null;
-    }
+    //onödig
+//    public Airplane getPlane(int index) {
+//        if (index < airplaneList.size())
+//            return airplaneList.get(index);
+//
+//        return null;
+//    }
 
     public Airplane getPlaneByFlightNr(int flightNr) {
         for (Airplane plane : airplaneList) {
@@ -88,12 +89,26 @@ public class AirlineManager {
         return false;
     }
 
-    public void addSeat() {
+    public boolean addSeat(int flightNr, int numOfSeats) {
+        for (Airplane plane : airplaneList) {
+            if (plane.getFlightNr()==flightNr) {
+                plane.addSeat(numOfSeats);
+                return true;
+            }
+        }
 
+        return false;
     }
 
-    public void removeSeat() {
+    public boolean removeSeat(int flightNr, int numOfSeats) {
+        for (Airplane plane : airplaneList) {
+            if (plane.getFlightNr()==flightNr) {
+                plane.removeSeat(numOfSeats);
+                return true;
+            }
+        }
 
+        return false;
     }
 
     public int createReservation(String firstName, String lastName, String address, String phoneNr,

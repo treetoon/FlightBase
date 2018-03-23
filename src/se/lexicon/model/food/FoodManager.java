@@ -21,7 +21,6 @@ public class FoodManager {
         businessFoodList.add(new Food(150, "Entrecote"));
         businessFoodList.add(new Food(200, "Froglegs"));
         businessFoodList.add(new Food(200, "Caviar"));
-        businessFoodList.add(new Food(100, "Wine"));
         businessFoodList.add(new Food(150, "Champagne"));
     }
 
